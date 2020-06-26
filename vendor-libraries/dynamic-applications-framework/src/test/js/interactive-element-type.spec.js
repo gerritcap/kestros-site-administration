@@ -18,10 +18,8 @@
 
 let assert = require('assert');
 
-import {InteractiveElement}
-  from '../../js/interactive-element'
-import {InteractiveElementType}
-  from '../../js/interactive-element-type'
+import {InteractiveElementType} from '../../js/interactive-element-type'
+import {InteractiveElement} from '../../js/interactive-element'
 
 describe('InteractiveElementType', function () {
 
