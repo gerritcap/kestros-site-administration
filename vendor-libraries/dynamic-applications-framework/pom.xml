@@ -47,7 +47,7 @@
   </dependencies>
 
   <build>
-    <sourceDirectory>src/content/jcr_root</sourceDirectory>
+    <sourceDirectory>src/js</sourceDirectory>
     <testSourceDirectory>src/test/js</testSourceDirectory>
     <resources>
       <resource>
