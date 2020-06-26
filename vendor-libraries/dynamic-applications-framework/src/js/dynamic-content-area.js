@@ -88,6 +88,11 @@ export class DynamicContentArea extends InteractiveElement {
     return this.loader.isVisible
   }
 
+  /**
+   * Content area request path.
+   *
+   * @returns {string|undefined} Content area request path.
+   */
   get requestPath () {
     if (this.path !== null && typeof this.path !== 'undefined') {
       let requestedPath = this.path
@@ -99,11 +104,21 @@ export class DynamicContentArea extends InteractiveElement {
     return undefined
   }
 
+  /**
+   * Registers element to the InteractiveElement type. Element will no longer registerable to any other InteractiveElement type.
+   *
+   * @returns {void}
+   */
   register () {
     this.loadContent()
     return super.register()
   }
 
+  /**
+   * Registers event listeners.
+   * Event Listeners:
+   * dynamic-content-refresh on element - refreshes content area.
+   */
   registerEventListeners () {
     super.registerEventListeners()
     this.element.addEventListener('dynamic-content-refresh', () => {
@@ -125,6 +140,11 @@ export class DynamicContentArea extends InteractiveElement {
     // }
   }
 
+  /**
+   * Loads content based on the current data-path attribute.
+   * Number of retries can be configured, in the event that the endpoint
+   * doesn't always load properly 100% of the time.
+   */
   loadContent () {
     this.showLoading()
     this.element.dispatchEvent(new Event('dynamic-content-loading'))
@@ -163,12 +183,18 @@ export class DynamicContentArea extends InteractiveElement {
     }
   }
 
+  /**
+   * Shows loader and hides content area.
+   */
   showLoading () {
     this.element.style.height = this.element.offsetHeight
     this.loader.show()
     this.contentArea.hide()
   }
 
+  /**
+   * Hides loader and shows content area.
+   */
   showContent () {
     this.element.style.height = ''
     this.element.style.minHeight = ''
