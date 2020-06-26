@@ -20,6 +20,11 @@
  * Baseline class for interactive elements.
  */
 class InteractiveElement {
+  /**
+   * Initializes the element as an InteractiveElement.
+   *
+   * @param {HTMLElement} element - Element to initialize.
+   */
   constructor(element) {
     this.element = element;
   }
@@ -36,6 +41,11 @@ class InteractiveElement {
     return false;
   }
 
+  /**
+   * Whether the element is visible.
+   *
+   * @returns {boolean} Whether the element is visible.
+   */
   get isVisible() {
     if (this.element !== null && typeof this.element !== 'undefined') {
       return !this.element.classList.contains(InteractiveElement.CLASS_HIDDEN);
@@ -90,6 +100,9 @@ class InteractiveElement {
     }
   }
 
+  /**
+   * Marks the element as registered and registers event listeners.
+   */
   register() {
     if (!this.isRegistered()) {
       if (this.element !== null && typeof this.element !== 'undefined') {
@@ -99,6 +112,11 @@ class InteractiveElement {
     }
   }
 
+  /**
+   * Whether the current element has been previously registered.
+   *
+   * @returns {boolean} Whether the current element has been previously registered.
+   */
   isRegistered() {
     if (this.element !== null && typeof this.element !== 'undefined') {
       if (this.element.dataset.registered === 'true') {
@@ -108,6 +126,10 @@ class InteractiveElement {
     return false;
   }
 
+  /**
+   * Registers event listeners that are to be added during element registration.
+   * Should be overwritten by extending classes when needed.
+   */
   registerEventListeners() {}
 }
 

@@ -17,10 +17,18 @@
   */
 
 /**
- * Type for registering element tpyes to an application.
+ * Type for registering element types to an application.
  * Application will match elements with matching selectors to the specified type.
  */
 class InteractiveElementType {
+  /**
+   * Constructs InteractiveElementType as a registerable object. Elements are
+   * matched against the selector, and are initialized as the closest matching
+   * InteractiveElement type.
+   *
+   * @param {string} selector - Selector to match elements to.
+   * @param {class} type - Class to adapt matching elements to.
+   */
   constructor(selector, type) {
     this.selectorString = selector;
     this._type = type;

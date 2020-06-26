@@ -7,6 +7,12 @@
  * closest matching type.
  */
 class DynamicApplication {
+  /**
+   * Builds application object.
+   *
+   * @param {HTMLElement} element - Application element.
+   * @param {object} options - Application options.
+   */
   constructor(element, options) {
     this.element = element;
     this._interactiveElementTypes = [];
