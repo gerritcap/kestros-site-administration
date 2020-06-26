@@ -1,0 +1,66 @@
+/*
+  ~      Copyright (C) 2020  Kestros, Inc.
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  */
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "no-undef": 0,
+    "jsdoc/check-alignment": 1,
+    "jsdoc/check-indentation": 1,
+    "jsdoc/check-param-names": 1,
+    "jsdoc/check-syntax": 1,
+    "jsdoc/check-tag-names": 1,
+    "jsdoc/check-types": 1,
+    "jsdoc/implements-on-classes": 1,
+    "jsdoc/match-description": 1,
+    "jsdoc/newline-after-description": 2,
+    "jsdoc/no-undefined-types": 0,
+    "jsdoc/require-description": 2,
+    "jsdoc/require-description-complete-sentence": 2,
+    "jsdoc/require-hyphen-before-param-description": 2,
+    "require-jsdoc": [2, {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true
+      }
+    }],
+    "jsdoc/require-param": 2,
+    "jsdoc/require-param-description": 2,
+    "jsdoc/require-param-name": 2,
+    "jsdoc/require-param-type": 2,
+    "jsdoc/require-returns": 2,
+    "jsdoc/require-returns-check": 1,
+    "jsdoc/require-returns-description": 1,
+    "jsdoc/require-returns-type": 1,
+    "jsdoc/valid-types": 1
+  },
+  "plugins": [
+    "jsdoc"
+  ]
+}

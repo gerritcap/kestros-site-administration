@@ -37,6 +37,7 @@
 
   <modules>
     <module>dynamic-applications-framework</module>
+    <module>kestros-ui-foundation</module>
   </modules>
 
 </project>
