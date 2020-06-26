@@ -43,6 +43,7 @@ describe('Interactive Element', function () {
       let interactiveElement = new InteractiveElement(null);
 
       interactiveElement.disable()
+      assert.equal(false, interactiveElement.disabled)
     })
 
   })
