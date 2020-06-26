@@ -91,7 +91,7 @@ class InteractiveElement {
   }
 
   register() {
-    if (this.isRegistered()) {} else {
+    if (!this.isRegistered()) {
       if (this.element !== null && typeof this.element !== 'undefined') {
         this.element.dataset.registered = 'true';
       }
