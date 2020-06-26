@@ -35,7 +35,9 @@
   <name>Kestros Site Administration Vendor Libraries</name>
   <description>Vendor Libraries required for Kestros Site Administration UI Framework.</description>
 
-  <modules></modules>
+  <modules>
+    <module>dynamic-applications-framework</module>
+  </modules>
 
 </project>
 
