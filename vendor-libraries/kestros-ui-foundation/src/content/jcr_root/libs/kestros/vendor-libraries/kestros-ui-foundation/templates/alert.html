@@ -1,0 +1,61 @@
+<template data-sly-template.alertBase="${ @ text,icon, additionalClasses}"
+          data-title="Base Alert"
+          data-description="Baseline alert with optional close and collapse buttons.
+           Alert level and close/collapse will need to be passed as additional classes.
+           Collapsible is alert--collapsible, closable is alert--closable.">
+  <div class="alert ${additionalClasses}">
+    <span class="alert__content">
+      <i class="alert__icon ${icon}"></i>
+      <span class="alert__text">${text}</span>
+    </span>
+    <span class="alert__controls">
+      <span class="alert__close">Close</span>
+      <span class="alert__collapse">Collapse</span>
+    </span>
+  </div>
+</template>
+
+<template data-sly-template.alertError="${ @ text, icon, additionalClasses}"
+          data-title="Danger Alert"
+          data-description="Alert danger variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--danger'}"/>
+</template>
+
+<template data-sly-template.alertWarning="${ @ text, icon, additionalClasses}"
+          data-title="Warning Alert"
+          data-description="Alert warning variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--warning'}"/>
+</template>
+
+<template data-sly-template.alertInfo="${ @ text, icon, additionalClasses}"
+          data-title="Info Alert"
+          data-description="Alert info variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--info'}"/>
+</template>
+
+<template data-sly-template.alertSuccess="${ @ text, icon, additionalClasses}"
+          data-title="Success Alert"
+          data-description="Alert success variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--success'}"/>
+</template>
+
+<template data-sly-template.alertMuted="${ @ text, icon, additionalClasses}"
+          data-title="Muted Alert"
+          data-description="Alert muted variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--muted'}"/>
+</template>
