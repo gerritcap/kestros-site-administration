@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel src/js --out-dir src/content/jcr_root/libs/kestros/vendor-libraries/kestros-ui-foundation/js",
-    "lint": "./node_modules/.bin/eslint 'src/js/**/*.js'",
+    "lint": "./node_modules/.bin/eslint 'src/js/**/*.js' && npx stylelint 'src/**/*.less'",
     "lint--fix": "./node_modules/.bin/eslint 'src/js/**/*.js' --fix",
     "test": "nyc mocha --recursive 'src/test/js/**/*.spec.js' --require esm",
     "coverage": "nyc report --reporter=lcov --reporter=text-lcov"
@@ -13,10 +13,10 @@
   "author": "Danny Moulton",
   "license": "ISC",
   "devDependencies": {
-    "dynamic-applications-framework": "file:../dynamic-applications-framework",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-remove-import-export": "^1.1.1",
+    "dynamic-applications-framework": "file:../dynamic-applications-framework",
     "eslint": "^7.2.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "^14.1.1",
@@ -31,7 +31,9 @@
     "jsdom": "15.1.1",
     "jsdom-global": "3.0.2",
     "mocha": "^6.2.1",
-    "nyc": "^14.1.1"
+    "nyc": "^14.1.1",
+    "stylelint": "^13.6.1",
+    "stylelint-config-standard": "^20.0.0"
   },
   "babel": {
     "plugins": [
