@@ -47,6 +47,10 @@ class DynamicContentArea extends InteractiveElement {
     return this.element.dataset.path;
   }
 
+  get suffix() {
+    return this.element.dataset.suffix;
+  }
+
   /**
    * The loader Element associated to the current section.
    *
@@ -95,6 +99,9 @@ class DynamicContentArea extends InteractiveElement {
       if (!requestedPath.includes('.html')) {
         requestedPath += '.html';
       }
+      if (this.suffix !== null && typeof this.suffix !== 'undefined' && this.suffix !== 'undefined') {
+        requestedPath += this.suffix;
+      }
       return requestedPath;
     }
     return undefined;
@@ -128,10 +135,11 @@ class DynamicContentArea extends InteractiveElement {
    * @param {string} path - Path to the resource that is dynamically loaded.
    * @returns {void}
    */
-  updateContent(path) {
+  updateContent(path, suffix) {
     // TODO can we avoid the issue where mismatches occur when clicking links while content area is loading??
     // if (!this.isLoading) {
     this.element.setAttribute('data-path', path);
+    this.element.setAttribute('data-suffix', suffix);
     this.loadContent();
     // }
   }

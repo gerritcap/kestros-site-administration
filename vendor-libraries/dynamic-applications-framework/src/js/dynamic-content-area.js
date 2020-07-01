@@ -16,7 +16,7 @@
   ~
   */
 
-import { InteractiveElement } from './interactive-element'
+import {InteractiveElement} from './interactive-element'
 
 /**
  * Container element which can dynamically load in content from an external resource.
@@ -27,7 +27,7 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @param {HTMLElement} element - Container element.
    */
-  constructor (element) {
+  constructor(element) {
     super(element)
     this.allowedErrorRetries = 3
     this._loader = null
@@ -45,8 +45,12 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @returns {string} Path to the resource that is dynamically loaded.
    */
-  get path () {
+  get path() {
     return this.element.dataset.path
+  }
+
+  get suffix() {
+    return this.element.dataset.suffix
   }
 
   /**
@@ -54,11 +58,11 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @returns {InteractiveElement} Loader Element.
    */
-  get loader () {
+  get loader() {
     if (this._loader === null) {
       if (this.element !== null && typeof this.element !== 'undefined') {
         this._loader = new InteractiveElement(
-          this.element.querySelector('.loader'))
+            this.element.querySelector('.loader'))
       }
     }
     return this._loader
@@ -69,11 +73,11 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @returns {InteractiveElement} The content area of the current dynamic section.
    */
-  get contentArea () {
+  get contentArea() {
     if (this._contentArea === null) {
       if (this.element !== null && typeof this.element !== 'undefined') {
         this._contentArea = new InteractiveElement(
-          this.element.querySelector('.content-area'))
+            this.element.querySelector('.content-area'))
       }
     }
     return this._contentArea
@@ -84,7 +88,7 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @returns {boolean} Whether the section is currently loading.
    */
-  get isLoading () {
+  get isLoading() {
     return this.loader.isVisible
   }
 
@@ -93,11 +97,15 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @returns {string|undefined} Content area request path.
    */
-  get requestPath () {
+  get requestPath() {
     if (this.path !== null && typeof this.path !== 'undefined') {
       let requestedPath = this.path
       if (!requestedPath.includes('.html')) {
         requestedPath += '.html'
+      }
+      if (this.suffix !== null && typeof this.suffix !== 'undefined'
+          && this.suffix !== 'undefined') {
+        requestedPath += this.suffix
       }
       return requestedPath
     }
@@ -109,7 +117,7 @@ export class DynamicContentArea extends InteractiveElement {
    *
    * @returns {void}
    */
-  register () {
+  register() {
     this.loadContent()
     return super.register()
   }
@@ -119,7 +127,7 @@ export class DynamicContentArea extends InteractiveElement {
    * Event Listeners:
    * dynamic-content-refresh on element - refreshes content area.
    */
-  registerEventListeners () {
+  registerEventListeners() {
     super.registerEventListeners()
     this.element.addEventListener('dynamic-content-refresh', () => {
       this.loadContent()
@@ -132,10 +140,11 @@ export class DynamicContentArea extends InteractiveElement {
    * @param {string} path - Path to the resource that is dynamically loaded.
    * @returns {void}
    */
-  updateContent (path) {
+  updateContent(path, suffix) {
     // TODO can we avoid the issue where mismatches occur when clicking links while content area is loading??
     // if (!this.isLoading) {
     this.element.setAttribute('data-path', path)
+    this.element.setAttribute('data-suffix', suffix)
     this.loadContent()
     // }
   }
@@ -145,7 +154,7 @@ export class DynamicContentArea extends InteractiveElement {
    * Number of retries can be configured, in the event that the endpoint
    * doesn't always load properly 100% of the time.
    */
-  loadContent () {
+  loadContent() {
     this.showLoading()
     this.element.dispatchEvent(new Event('dynamic-content-loading'))
     if (this.requestPath !== null && typeof this.requestPath !== 'undefined') {
@@ -153,40 +162,40 @@ export class DynamicContentArea extends InteractiveElement {
         method: 'GET',
         credentials: 'same-origin'
       })
-        .then((res) => {
-          if (res.ok && res.status === 200) {
-            return res.text()
-          }
-        }).then((html) => {
-          if (typeof html !== 'undefined') {
-            this.contentArea.element.innerHTML = html
-            this.showContent()
+      .then((res) => {
+        if (res.ok && res.status === 200) {
+          return res.text()
+        }
+      }).then((html) => {
+        if (typeof html !== 'undefined') {
+          this.contentArea.element.innerHTML = html
+          this.showContent()
 
-            document.dispatchEvent(new CustomEvent('dynamic-content-loaded', {
-              detail: {
-                element: this.element
-              }
-            }))
-            this.element.dispatchEvent(new Event('dynamic-content-loaded'))
-
-            this.errorRetryCount = 0
-          } else {
-            this.errorRetryCount += 1
-            if (this.allowedErrorRetries > this.errorRetryCount) {
-              this.loadContent()
-            } else {
-              this.element.dispatchEvent(new Event('dynamic-content-failed'))
-              this.errorRetryCount = 0
+          document.dispatchEvent(new CustomEvent('dynamic-content-loaded', {
+            detail: {
+              element: this.element
             }
+          }))
+          this.element.dispatchEvent(new Event('dynamic-content-loaded'))
+
+          this.errorRetryCount = 0
+        } else {
+          this.errorRetryCount += 1
+          if (this.allowedErrorRetries > this.errorRetryCount) {
+            this.loadContent()
+          } else {
+            this.element.dispatchEvent(new Event('dynamic-content-failed'))
+            this.errorRetryCount = 0
           }
-        })
+        }
+      })
     }
   }
 
   /**
    * Shows loader and hides content area.
    */
-  showLoading () {
+  showLoading() {
     this.element.style.height = this.element.offsetHeight
     this.loader.show()
     this.contentArea.hide()
@@ -195,7 +204,7 @@ export class DynamicContentArea extends InteractiveElement {
   /**
    * Hides loader and shows content area.
    */
-  showContent () {
+  showContent() {
     this.element.style.height = ''
     this.element.style.minHeight = ''
     this.loader.hide()
