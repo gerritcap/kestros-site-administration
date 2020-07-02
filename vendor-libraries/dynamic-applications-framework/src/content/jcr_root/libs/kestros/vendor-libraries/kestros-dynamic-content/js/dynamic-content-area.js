@@ -39,8 +39,6 @@ class DynamicContentArea extends InteractiveElement {
     }
   }
 
-  setSuffixDataAttribute() {}
-
   /**
    * Path to the resource that is dynamically loaded.
    *
@@ -50,10 +48,20 @@ class DynamicContentArea extends InteractiveElement {
     return this.element.dataset.path;
   }
 
+  /**
+   * Request suffix.
+   *
+   * @returns {string} Request suffix.
+   */
   get suffix() {
     return this.element.dataset.suffix;
   }
 
+  /**
+   * Whether to show a response that was redirected. Defaults to false.
+   *
+   * @returns {boolean} Whether to show a response that was redirected.
+   */
   get isShowRedirect() {
     let isShowRedirect = false;
     if (this.element.dataset.showRedirect !== null && typeof this.element.dataset.showRedirect !== 'undefined') {
@@ -119,6 +127,15 @@ class DynamicContentArea extends InteractiveElement {
   }
 
   /**
+   * Optional logic run during construction which sets the data-suffix attribute.
+   *
+   * @returns {void}
+   */
+  setSuffixDataAttribute() {}
+  // does nothing
+
+
+  /**
    * Registers element to the InteractiveElement type. Element will no longer registerable to any other InteractiveElement type.
    *
    * @returns {void}
@@ -144,6 +161,8 @@ class DynamicContentArea extends InteractiveElement {
    * Updates the resource that is to be dynamically reloaded, then reloads the content section.
    *
    * @param {string} path - Path to the resource that is dynamically loaded.
+   * @param {string} suffix - Request suffix which is optionally appended to
+   * the request.
    * @returns {void}
    */
   updateContent(path, suffix) {
@@ -168,9 +187,16 @@ class DynamicContentArea extends InteractiveElement {
         method: 'GET',
         credentials: 'same-origin'
       }).then(res => {
+        const responseUrl = new URL(res.url).pathname;
+        let requestPath = this.requestPath;
+        if (requestPath.startsWith('http')) {
+          requestPath = new URL(requestPath).pathname;
+        }
         if (res.ok && res.status === 200) {
-          if (res.url.endsWith(this.requestPath) || this.isShowRedirect) {
+          if (responseUrl === requestPath || this.isShowRedirect) {
             return res.text();
+          } else {
+            return undefined;
           }
         }
       }).then(html => {

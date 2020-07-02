@@ -34,6 +34,7 @@ describe('DynamicContentArea', () => {
   const successfulResponse = {
     status: 200,
     body: responseBody,
+    url: 'http://example.com/content/resource.html',
     headers: {
       'Content-Type': 'text/html'
     }
