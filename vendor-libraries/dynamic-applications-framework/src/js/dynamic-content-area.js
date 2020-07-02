@@ -29,6 +29,7 @@ export class DynamicContentArea extends InteractiveElement {
    */
   constructor(element) {
     super(element)
+    this.setSuffixDataAttribute()
     this.allowedErrorRetries = 3
     this._loader = null
     this._contentArea = null
@@ -38,6 +39,10 @@ export class DynamicContentArea extends InteractiveElement {
       }
       this.errorRetryCount = 0
     }
+  }
+
+  setSuffixDataAttribute() {
+
   }
 
   /**
@@ -51,6 +56,15 @@ export class DynamicContentArea extends InteractiveElement {
 
   get suffix() {
     return this.element.dataset.suffix
+  }
+
+  get isShowRedirect() {
+    let isShowRedirect = false
+    if (this.element.dataset.showRedirect !== null
+        && typeof this.element.dataset.showRedirect !== 'undefined') {
+      isShowRedirect = this.element.dataset.showRedirect
+    }
+    return isShowRedirect
   }
 
   /**
@@ -119,7 +133,7 @@ export class DynamicContentArea extends InteractiveElement {
    */
   register() {
     this.loadContent()
-    return super.register()
+    super.register()
   }
 
   /**
@@ -157,6 +171,7 @@ export class DynamicContentArea extends InteractiveElement {
   loadContent() {
     this.showLoading()
     this.element.dispatchEvent(new Event('dynamic-content-loading'))
+    console.log('starting')
     if (this.requestPath !== null && typeof this.requestPath !== 'undefined') {
       fetch(this.requestPath, {
         method: 'GET',
@@ -164,7 +179,9 @@ export class DynamicContentArea extends InteractiveElement {
       })
       .then((res) => {
         if (res.ok && res.status === 200) {
-          return res.text()
+          if (res.url.endsWith(this.requestPath) || this.isShowRedirect) {
+            return res.text()
+          }
         }
       }).then((html) => {
         if (typeof html !== 'undefined') {
