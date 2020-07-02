@@ -163,7 +163,6 @@ class DynamicContentArea extends InteractiveElement {
   loadContent() {
     this.showLoading();
     this.element.dispatchEvent(new Event('dynamic-content-loading'));
-    console.log('starting');
     if (this.requestPath !== null && typeof this.requestPath !== 'undefined') {
       fetch(this.requestPath, {
         method: 'GET',
