@@ -100,7 +100,7 @@
             <goals>
               <goal>npm</goal>
             </goals>
-            <phase>test</phase>
+            <phase>compile</phase>
             <configuration>
               <arguments>install</arguments>
             </configuration>
