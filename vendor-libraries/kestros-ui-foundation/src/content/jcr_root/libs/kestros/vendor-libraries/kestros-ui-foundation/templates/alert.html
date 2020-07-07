@@ -20,10 +20,15 @@
           data-title="Base Alert"
           data-description="Baseline alert with optional close and collapse buttons.
            Alert level and close/collapse will need to be passed as additional classes.
-           Collapsible is alert--collapsible, closable is alert--closable.">
+           Collapsible is alert--collapsible, closable is alert--closable."
+          data-text-description="Text to populate the alert with."
+          data-icon-description="Optional FontAwesome icon class to use within of alert."
+          data-additionalClasses-description="Additional classes added to alert element. Will be siblings of the `alert` class.">
   <div class="alert ${additionalClasses}">
     <span class="alert__content">
-      <i class="alert__icon ${icon}"></i>
+      <sly data-sly-call="${fontawesomeicon @
+           iconClass=icon,
+           additionalClasses='alert__icon'}"/>
       <span class="alert__text">${text}</span>
     </span>
     <span class="alert__controls">
