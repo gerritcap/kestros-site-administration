@@ -189,8 +189,10 @@ class DynamicContentArea extends InteractiveElement {
       }).then(res => {
         const responseUrl = new URL(res.url).pathname;
         let requestPath = this.requestPath;
-        if (requestPath.startsWith('http')) {
+        if (requestPath.startsWith('http') || requestPath.startsWith('https')) {
           requestPath = new URL(requestPath).pathname;
+        } else {
+          requestPath = new URL('http://' + window.location.host + this.requestPath).pathname;
         }
         if (res.ok && res.status === 200) {
           if (responseUrl === requestPath || this.isShowRedirect) {
