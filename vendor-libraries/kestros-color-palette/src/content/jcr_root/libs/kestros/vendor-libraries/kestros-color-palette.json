@@ -1,0 +1,6 @@
+{
+  "jcr:primaryType": "kes:VendorLibrary",
+  "jcr:title": "Kestros Color Palette",
+  "jcr:description": "Baseline color palette for use across Kestros applications.",
+  "documentationUrl": "https://kestros.io"
+}

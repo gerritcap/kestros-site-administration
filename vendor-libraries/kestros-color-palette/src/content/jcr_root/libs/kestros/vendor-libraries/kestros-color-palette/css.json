@@ -1,0 +1,6 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "include": [
+    "greyscale.less"
+  ]
+}

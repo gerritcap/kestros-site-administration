@@ -4,7 +4,7 @@
   "description": "Foundation UI Elements for Kestros.",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel src/js --out-dir src/content/jcr_root/libs/kestros/vendor-libraries/kestros-ui-foundation/js",
+    "build": "./node_modules/.bin/babel src/js --out-dir src/main/resources/libs/kestros/vendor-libraries/kestros-ui-foundation/js",
     "lint": "./node_modules/.bin/eslint 'src/js/**/*.js' && npx stylelint 'src/**/*.less'",
     "lint--fix": "./node_modules/.bin/eslint 'src/js/**/*.js' --fix",
     "test": "nyc mocha --recursive 'src/test/js/**/*.spec.js' --require esm",
