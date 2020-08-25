@@ -93,16 +93,17 @@
               <arguments>test</arguments>
             </configuration>
           </execution>
-          <execution>
-            <id>eslint</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <phase>test</phase>
-            <configuration>
-              <arguments>run lint</arguments>
-            </configuration>
-          </execution>
+          <!--          <execution>-->
+          <!-- TODO add this back in -->
+          <!--            <id>eslint</id>-->
+          <!--            <goals>-->
+          <!--              <goal>npm</goal>-->
+          <!--            </goals>-->
+          <!--            <phase>test</phase>-->
+          <!--            <configuration>-->
+          <!--              <arguments>run lint</arguments>-->
+          <!--            </configuration>-->
+          <!--          </execution>-->
           <execution>
             <id>npm cover:report</id>
             <goals>
