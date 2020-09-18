@@ -24,7 +24,7 @@
   <parent>
     <groupId>io.kestros.cms</groupId>
     <artifactId>kestros-site-administration-vendor-libraries</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
 
   <artifactId>kestros-color-palette</artifactId>

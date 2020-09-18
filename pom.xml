@@ -24,13 +24,13 @@
   <parent>
     <groupId>io.kestros.commons</groupId>
     <artifactId>kestros-parent-strict</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.1</version>
     <relativePath/>
   </parent>
 
   <groupId>io.kestros.cms</groupId>
   <artifactId>kestros-site-administration</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
 
   <name>Kestros Site Administration</name>
   <description>Foundational bundles, frontend libraries, and resources required for Kestros Site
@@ -47,12 +47,12 @@
       <dependency>
         <groupId>io.kestros.cms</groupId>
         <artifactId>kestros-cms-foundation-core</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
       </dependency>
       <dependency>
         <groupId>io.kestros.cms</groupId>
         <artifactId>kestros-forms-foundation-core</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
