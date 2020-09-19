@@ -1,0 +1,125 @@
+/*
+    ~      Copyright (C) 2020  Kestros, Inc.
+    ~
+    ~     This program is free software: you can redistribute it and/or modify
+    ~     it under the terms of the GNU General Public License as published by
+    ~     the Free Software Foundation, either version 3 of the License, or
+    ~     (at your option) any later version.
+    ~
+    ~     This program is distributed in the hope that it will be useful,
+    ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ~     GNU General Public License for more details.
+    ~
+    ~     You should have received a copy of the GNU General Public License
+    ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    ~
+    */
+
+@kes-alert-danger-background-color: lighten(@kes-error-color, 40);
+@kes-alert-danger-text-color: @kes-error-color;
+
+@kes-alert-warning-background-color: lighten(@kes-warning-color, 30%);
+@kes-alert-warning-text-color: darken(@kes-warning-color, 30%);
+
+@kes-alert-success-background-color: #b3ffb3;
+@kes-alert-success-text-color: #005819;
+
+@kes-alert-info-background-color: #d0d0ff;
+@kes-alert-info-text-color: #005397;
+
+@kes-alert-muted-background-color: rgba(245, 245, 245, 1);
+@kes-alert-muted-text-color: @kes-text-color;
+
+.alert-variation(@background-color, @color) {
+  background-color: @background-color;
+  color: @color;
+  border: 1px solid darken(@background-color, 10%);
+
+  .alert__close,
+  .alert__collapse {
+    &:hover {
+      color: darken(@color, 20%);
+    }
+  }
+
+  &.alert--collapsed {
+    .alert__icon {
+      &:hover {
+        color: darken(@color, 20%);
+      }
+    }
+  }
+}
+
+.kestros {
+  .alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease-out;
+    overflow: hidden;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    min-height: 16px;
+
+    &.alert--closed {
+      max-height: 0;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    &.alert--collapsed {
+      max-width: 42px;
+
+      .alert__icon {
+        cursor: pointer;
+      }
+    }
+
+    .alert__content {
+      display: flex;
+      justify-content: space-between;
+
+      .alert__icon {
+        padding: 12px;
+        line-height: 1.2;
+      }
+
+      .alert__text {
+        padding: 12px 0;
+      }
+    }
+
+    .alert__controls {
+      padding: 12px;
+
+      .alert__close,
+      .alert__collapse {
+        cursor: pointer;
+        .noselect();
+      }
+    }
+
+    &.alert--danger {
+      .alert-variation(@kes-alert-danger-background-color, @kes-alert-danger-text-color);
+    }
+
+    &.alert--warning {
+      .alert-variation(@kes-alert-warning-background-color, @kes-alert-warning-text-color);
+    }
+
+    &.alert--success {
+      .alert-variation(@kes-alert-success-background-color, @kes-alert-success-text-color);
+    }
+
+    &.alert--info {
+      .alert-variation(@kes-alert-info-background-color, @kes-alert-info-text-color);
+    }
+
+    &.alert--muted {
+      .alert-variation(@kes-alert-muted-background-color, @kes-alert-muted-text-color);
+    }
+  }
+}

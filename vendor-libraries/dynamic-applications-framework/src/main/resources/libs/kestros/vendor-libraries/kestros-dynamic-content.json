@@ -1,0 +1,6 @@
+{
+  "jcr:primaryType": "kes:VendorLibrary",
+  "jcr:title": "Kestros Dynamic Content",
+  "jcr:description": "Foundation library for retrieving, registering, and managing dynamic content.",
+  "documentationUrl": "https://www.kestros.io"
+}

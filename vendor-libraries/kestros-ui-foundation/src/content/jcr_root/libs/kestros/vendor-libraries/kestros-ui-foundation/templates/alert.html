@@ -1,0 +1,84 @@
+<!--/*
+  ~      Copyright (C) 2020  Kestros, Inc.
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  */-->
+
+<template data-sly-template.alertBase="${ @ text,icon, additionalClasses}"
+          data-title="Base Alert"
+          data-description="Baseline alert with optional close and collapse buttons.
+           Alert level and close/collapse will need to be passed as additional classes.
+           Collapsible is alert--collapsible, closable is alert--closable."
+          data-text-description="Text to populate the alert with."
+          data-icon-description="Optional FontAwesome icon class to use within of alert."
+          data-additionalClasses-description="Additional classes added to alert element. Will be siblings of the `alert` class.">
+  <div class="alert ${additionalClasses}">
+    <span class="alert__content">
+      <sly data-sly-call="${fontawesomeicon @
+           iconClass=icon,
+           additionalClasses='alert__icon'}"/>
+      <span class="alert__text">${text}</span>
+    </span>
+    <span class="alert__controls">
+      <span class="alert__close">Close</span>
+      <span class="alert__collapse">Collapse</span>
+    </span>
+  </div>
+</template>
+
+<template data-sly-template.alertError="${ @ text, icon, additionalClasses}"
+          data-title="Danger Alert"
+          data-description="Alert danger variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--danger'}"/>
+</template>
+
+<template data-sly-template.alertWarning="${ @ text, icon, additionalClasses}"
+          data-title="Warning Alert"
+          data-description="Alert warning variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--warning'}"/>
+</template>
+
+<template data-sly-template.alertInfo="${ @ text, icon, additionalClasses}"
+          data-title="Info Alert"
+          data-description="Alert info variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--info'}"/>
+</template>
+
+<template data-sly-template.alertSuccess="${ @ text, icon, additionalClasses}"
+          data-title="Success Alert"
+          data-description="Alert success variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--success'}"/>
+</template>
+
+<template data-sly-template.alertMuted="${ @ text, icon, additionalClasses}"
+          data-title="Muted Alert"
+          data-description="Alert muted variant.">
+  <sly data-sly-call="${alertbase @
+     text=text,
+     icon=icon,
+     additionalClasses='alert--muted'}"/>
+</template>

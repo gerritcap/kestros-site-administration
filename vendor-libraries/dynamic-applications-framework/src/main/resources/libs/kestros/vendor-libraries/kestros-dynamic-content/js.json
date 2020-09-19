@@ -1,0 +1,9 @@
+{
+  "jcr:primaryType": "sling:OrderedFolder",
+  "include": [
+    "interactive-element-type.js",
+    "dynamic-application.js",
+    "interactive-element.js",
+    "dynamic-content-area.js"
+  ]
+}
