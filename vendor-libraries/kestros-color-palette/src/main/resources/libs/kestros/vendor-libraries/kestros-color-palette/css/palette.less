@@ -1,0 +1,102 @@
+/*
+    ~      Copyright (C) 2020  Kestros, Inc.
+    ~
+    ~     This program is free software: you can redistribute it and/or modify
+    ~     it under the terms of the GNU General Public License as published by
+    ~     the Free Software Foundation, either version 3 of the License, or
+    ~     (at your option) any later version.
+    ~
+    ~     This program is distributed in the hope that it will be useful,
+    ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ~     GNU General Public License for more details.
+    ~
+    ~     You should have received a copy of the GNU General Public License
+    ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    ~
+    */
+
+@primary-light--5: lighten(@kes-primary-color, 70%);
+@primary-light--4: lighten(@kes-primary-color, 60%);
+@primary-light--3: lighten(@kes-primary-color, 40%);
+@primary-light--2: lighten(@kes-primary-color, 30%);
+@primary-light--1: lighten(@kes-primary-color, 25%);
+@primary-light: lighten(@kes-primary-color, 20%);
+@kes-primary-color: #808080; // Similar to greyscale.less variables
+@primary-dark: darken(@kes-primary-color, 12.5490%);
+@primary-dark--1: darken(@kes-primary-color, 18.8235%);
+@primary-dark--2: darken(@kes-primary-color, 25.0980%);
+@primary-dark--3: darken(@kes-primary-color, 31.3725%);
+@primary-dark--4: darken(@kes-primary-color, 43.9216%);
+
+@kes-primary-contrast--1: contrast(@kes-primary-color, darken(@kes-primary-color, 5%), lighten(@kes-primary-color, 5%), @primary-contrast-threshold);
+@kes-primary-contrast--2: contrast(@kes-primary-color, darken(@kes-primary-color, 10%), lighten(@kes-primary-color, 10%), @primary-contrast-threshold);
+@kes-primary-contrast--3: contrast(@kes-primary-color, darken(@kes-primary-color, 20%), lighten(@kes-primary-color, 20%), @primary-contrast-threshold);
+@kes-primary-contrast--4: contrast(@kes-primary-color, darken(@kes-primary-color, 40%), lighten(@kes-primary-color, 40%), @primary-contrast-threshold);
+@kes-primary-contrast--5: contrast(@kes-primary-color, darken(@kes-primary-color, 80%), lighten(@kes-primary-color, 80%), @primary-contrast-threshold);
+
+@kes-primary-offset: contrast(@kes-primary-color, @grey-dark--4, @white);
+@kes-secondary-color: lighten(@kes-primary-color, 10%);
+
+@kes-hover-color: darken(@kes-primary-color, 10%);
+
+//@kes-text-color: @grey-dark;
+@kes-text-color: @kes-primary-color;
+
+@kes-muted-bg: @kes-primary-color;
+@kes-muted-color: @kes-ui-grey-mid--2;
+
+@kes-link-color: @kes-ui-grey-mid--2;
+@kes-list-link-color: @kes-ui-grey-mid--2;
+
+@kes-warning-color: @kes-yellow;
+@kes-error-color: @kes-red;
+@kes-success-color: @kes-green;
+
+
+// TODO put this somewhere else?
+@border-light--1: 1px solid lighten(@grey-light--2, 2%);
+@border-light: 1px solid #d9d9d9;
+@border-mid: 1px solid #b9b9b9;
+
+// TODO put this somewhere else?
+@outline: solid 1px @grey-light;
+@outline-focus: solid 1px @grey-dark;
+
+.color-splotch-card {
+  margin-bottom: 20px;
+
+  .color-splotch {
+    height: 100px;
+    width: 100%;
+    .color-splotch(grey-light--4, @grey-light--4);
+    .color-splotch(grey-light--3, @grey-light--3);
+    .color-splotch(grey-light--2, @grey-light--2);
+    .color-splotch(grey-light--1, @grey-light--1);
+    .color-splotch(grey-light, @grey-light);
+    .color-splotch(grey-medium, @grey-medium);
+    .color-splotch(grey-dark, @grey-dark);
+    .color-splotch(grey-dark--1, @grey-dark--1);
+    .color-splotch(grey-dark--2, @grey-dark--2);
+    .color-splotch(grey-dark--3, @grey-dark--3);
+    .color-splotch(grey-dark--4, @grey-dark--4);
+
+    .color-splotch(primary-light--4, @primary-light--4);
+    .color-splotch(primary-light--3, @primary-light--3);
+    .color-splotch(primary-light--2, @primary-light--2);
+    .color-splotch(primary-light--1, @primary-light--1);
+    .color-splotch(primary-light, @primary-light);
+    .color-splotch(kes-primary-color, @kes-primary-color);
+    .color-splotch(primary-dark, @primary-dark);
+    .color-splotch(primary-dark--1, @primary-dark--1);
+    .color-splotch(primary-dark--2, @primary-dark--2);
+    .color-splotch(primary-dark--3, @primary-dark--3);
+    .color-splotch(primary-dark--4, @primary-dark--4);
+  }
+}
+
+.color-splotch(@name, @color) {
+  &.@{name} {
+    background-color: @color;
+  }
+}
