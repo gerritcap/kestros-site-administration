@@ -22,34 +22,48 @@ import { InteractiveElement } from 'dynamic-applications-framework/src/js/intera
  * Baseline element within a tabs container. Extended by Tab, and TabContents.
  */
 export class TabsElement extends InteractiveElement {
-    /**
-     * TabContainer element.
-     *
-     * @returns {null|*|Element} TabContainer element.
-     */
-    get containerElement() {
-        return this.element.closest('.tabs-container');
+  /**
+   * Index of the tab element.
+   *
+   * @returns {number} Index of the tab element.
+   */
+  get tabIndex () {
+    let i = 0
+    let element = this.element
+    while ((element = element.previousElementSibling) != null) {
+      ++i
     }
+    return i
+  }
 
-    /**
-     * Tab identifier.
-     *
-     * @returns {string} * Tab identifier.
-     */
-    get name() {
-        return this.element.dataset.name;
-    }
+  /**
+   * TabContainer element.
+   *
+   * @returns {null|*|Element} TabContainer element.
+   */
+  get containerElement () {
+    return this.element.closest('.tabs-container')
+  }
 
-    /**
-     * Tab container identifier.
-     *
-     * @returns {string|undefined} Tab container identifier.
-     */
-    get containerName() {
-        if (this.containerElement !== null && typeof this.containerElement !== 'undefined') {
-            return this.containerElement.dataset.name;
-        } else {
-            return undefined;
-        }
+  /**
+   * Tab identifier.
+   *
+   * @returns {string} * Tab identifier.
+   */
+  get name () {
+    return this.element.dataset.name
+  }
+
+  /**
+   * Tab container identifier.
+   *
+   * @returns {string|undefined} Tab container identifier.
+   */
+  get containerName () {
+    if (this.containerElement !== null && typeof this.containerElement !== 'undefined') {
+      return this.containerElement.dataset.name
+    } else {
+      return undefined
     }
+  }
 }
