@@ -20,18 +20,30 @@
  * Tab content element. Shows when the corresponding Tab is selected.
  */
 class TabContent extends TabsElement {
-    /**
-     * Registers event listeners to show/hide the content.
-     */
-    registerEventListeners() {
-        this.containerElement.addEventListener('tab-activate', event => {
-            if (event.detail.container === this.containerName) {
-                if (event.detail.name === this.name) {
-                    this.show();
-                } else {
-                    this.hide();
-                }
-            }
-        });
+  /**
+   * Constructs tab content area. Hides element if tab index is greater than 0.
+   *
+   * @param {HTMLElement} element - HTML element.
+   */
+  constructor(element) {
+    super(element);
+    if (this.tabIndex !== 0) {
+      this.hide();
     }
+  }
+
+  /**
+   * Registers event listeners to show/hide the content.
+   */
+  registerEventListeners() {
+    this.containerElement.addEventListener('tab-activate', event => {
+      if (event.detail.container === this.containerName) {
+        if (event.detail.name === this.name) {
+          this.show();
+        } else {
+          this.hide();
+        }
+      }
+    });
+  }
 }
