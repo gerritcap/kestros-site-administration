@@ -1,6 +1,10 @@
 {
   "jcr:primaryType": "sling:OrderedFolder",
   "include": [
-    "alert/alert.js"
+    "alert/alert.js",
+    "tabs/tabs-element.js",
+    "tabs/tabs-container.js",
+    "tabs/tab.js",
+    "tabs/tab-content.js"
   ]
 }
