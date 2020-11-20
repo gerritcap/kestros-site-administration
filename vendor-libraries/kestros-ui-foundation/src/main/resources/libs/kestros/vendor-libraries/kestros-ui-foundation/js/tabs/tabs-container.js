@@ -64,7 +64,7 @@ class TabsContainer extends InteractiveElement {
   registerEventListeners() {
     super.registerEventListeners();
     this.element.addEventListener('tabs-reset', () => {
-      this.element.dispatchEvent(TabsContainer.events.TAB_SELECTED, this.getEvent(this.querySelectorAll('.tab')[0].dataset.name));
+      this.element.dispatchEvent(new CustomEvent(TabsContainer.events.TAB_SELECTED, this.getEvent(this.element.querySelectorAll('.tab')[0].dataset.name)));
     });
 
     this.element.addEventListener(TabsContainer.events.TAB_SELECTED, event => {
