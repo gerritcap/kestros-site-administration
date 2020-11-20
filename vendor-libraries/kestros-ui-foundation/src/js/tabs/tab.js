@@ -16,7 +16,9 @@
     ~
     */
 
-import { TabsElement } from './tab-element'
+import { TabsElement } from './tabs-element'
+
+import { TabsContainer } from './tabs-container'
 
 /**
  * Tab, that when clicked, will show the corresponding TabContent.
@@ -75,11 +77,14 @@ export class Tab extends TabsElement {
    * @param {object} event - Event.
    */
   activateIfRequested (event) {
-    if (event.detail.container === this.containerName) {
-      if (event.detail.name === this.name) {
-        this.setActive()
-      } else {
-        this.setInactive()
+    if (event != null && typeof event !== 'undefined' && event.detail !== null &&
+        typeof event.detail !== 'undefined') {
+      if (event.detail.container === this.containerName) {
+        if (event.detail.name === this.name) {
+          this.setActive()
+        } else {
+          this.setInactive()
+        }
       }
     }
   }
@@ -90,9 +95,12 @@ export class Tab extends TabsElement {
    * @param {object} event - Event.
    */
   deactivateIfRequested (event) {
-    if (event.detail.container === this.containerName && event.detail.name ===
-        this.name) {
-      this.setInactive()
+    if (event !== null && typeof event !== 'undefined' && event.detail !== null &&
+        typeof event.detail !== 'undefined') {
+      if (event.detail.container === this.containerName && event.detail.name ===
+          this.name) {
+        this.setInactive()
+      }
     }
   }
 
