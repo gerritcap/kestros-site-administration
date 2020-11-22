@@ -16,3 +16,7 @@
   ~
   */
 require('./src/js/alert/alert')
+require('./src/js/tabs/tabs-element')
+require('./src/js/tabs/tab')
+require('./src/js/tabs/tab-content')
+require('./src/js/tabs/tabs-container')

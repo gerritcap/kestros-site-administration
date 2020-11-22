@@ -11,6 +11,8 @@ coverage/
 node/
 node_modules/
 .nyc_output/
+.stryker-tmp/
+reports/
 
 package-lock.json
 npm-debug.log`
