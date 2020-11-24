@@ -5,6 +5,12 @@
     "tabs/tabs-element.js",
     "tabs/tabs-container.js",
     "tabs/tab.js",
-    "tabs/tab-content.js"
+    "tabs/tab-content.js",
+    "wizard/wizard.js",
+    "wizard/wizard-tab.js",
+    "wizard/wizard-tab-content.js",
+    "wizard/wizard-button.js",
+    "wizard/wizard-next-button.js",
+    "wizard/wizard-previous-button.js"
   ]
 }

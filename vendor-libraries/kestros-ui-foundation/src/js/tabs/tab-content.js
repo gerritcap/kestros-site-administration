@@ -40,7 +40,7 @@ export class TabContent extends TabsElement {
   registerEventListeners () {
     this.containerElement.addEventListener('tab-activate', event => {
       if (event.detail.container === this.containerName) {
-        if (event.detail.name === this.name) {
+        if (event.detail.name === this.name || event.detail.index === this.tabIndex) {
           this.show()
         } else {
           this.hide()

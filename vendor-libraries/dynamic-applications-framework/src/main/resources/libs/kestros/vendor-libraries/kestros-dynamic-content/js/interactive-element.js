@@ -70,6 +70,7 @@ class InteractiveElement {
   disable() {
     if (this.element !== null && typeof this.element !== 'undefined') {
       this.element.disabled = true;
+      this.element.classList.add('disabled');
     }
   }
 
@@ -79,6 +80,7 @@ class InteractiveElement {
   enable() {
     if (this.element !== null && typeof this.element !== 'undefined') {
       this.element.disabled = false;
+      this.element.classList.remove('disabled');
     }
   }
 

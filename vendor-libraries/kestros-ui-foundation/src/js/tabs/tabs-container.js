@@ -49,13 +49,15 @@ export class TabsContainer extends InteractiveElement {
    * Helper for building event objects.
    *
    * @param {string} tabName - Tab to trigger event on.
+   * @param {integer} tabIndex - Index of tab to trigger event on.
    * @returns {{detail: {container: string, name: *}}} Helper for building event objects.
    */
-  getEvent (tabName) {
+  getEvent (tabName, tabIndex) {
     return {
       detail: {
         container: this.name,
-        name: tabName
+        name: tabName,
+        index: tabIndex
       }
     }
   }
@@ -67,20 +69,20 @@ export class TabsContainer extends InteractiveElement {
     super.registerEventListeners()
     this.element.addEventListener('tabs-reset', () => {
       this.element.dispatchEvent(new CustomEvent(TabsContainer.events.TAB_SELECTED,
-        this.getEvent(this.element.querySelectorAll('.tab')[0].dataset.name)))
+        this.getEvent(this.element.querySelectorAll('.tab')[0].dataset.name, 0)))
     })
 
     this.element.addEventListener(TabsContainer.events.TAB_SELECTED, event => {
       if (event.detail.container === this.name) {
         this.element.dispatchEvent(
           new CustomEvent(TabsContainer.events.TAB_ACTIVATE_BEFORE,
-            this.getEvent(event.detail.name)))
+            this.getEvent(event.detail.name, event.detail.index)))
         this.element.dispatchEvent(
           new CustomEvent(TabsContainer.events.TAB_ACTIVATE,
-            this.getEvent(event.detail.name)))
+            this.getEvent(event.detail.name, event.detail.index)))
         this.element.dispatchEvent(
           new CustomEvent(TabsContainer.events.TAB_ACTIVATE_AFTER,
-            this.getEvent(event.detail.name)))
+            this.getEvent(event.detail.name, event.detail.index)))
       }
     })
   }

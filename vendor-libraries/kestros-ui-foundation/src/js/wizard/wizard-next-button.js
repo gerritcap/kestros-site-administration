@@ -16,34 +16,19 @@
 ~
 */
 
-/**
- * Tab content element. Shows when the corresponding Tab is selected.
- */
-class TabContent extends TabsElement {
-  /**
-   * Constructs tab content area. Hides element if tab index is greater than 0.
-   *
-   * @param {HTMLElement} element - HTML element.
-   */
-  constructor(element) {
-    super(element);
-    if (this.tabIndex !== 0) {
-      this.hide();
-    }
-  }
+import { WizardButton } from './wizard-button'
+import { Wizard } from './wizard'
 
+/**
+ * Button for proceeding through wizard tabs.
+ */
+export class WizardNextButton extends WizardButton {
   /**
-   * Registers event listeners to show/hide the content.
+   * Event fired at the parent wizard element level when button is clicked.
+   *
+   * @returns {string} Event fired at the parent wizard element level when button is clicked.
    */
-  registerEventListeners() {
-    this.containerElement.addEventListener('tab-activate', event => {
-      if (event.detail.container === this.containerName) {
-        if (event.detail.name === this.name || event.detail.index === this.tabIndex) {
-          this.show();
-        } else {
-          this.hide();
-        }
-      }
-    });
+  get clickEventName () {
+    return Wizard.events.WIZARD_NEXT
   }
 }

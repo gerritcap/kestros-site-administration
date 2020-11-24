@@ -51,11 +51,19 @@ describe('Tab', () => {
   describe('set active', () => {
     let tabElement = document.createElement('div')
     let tab = new Tab(tabElement)
+    tab.setInactive()
+    tab.setActive()
     it('is active returns true', () => {
       assert.equal(tab.isActive, true)
     })
     it('classlist contains active', () => {
       assert.equal(tab.element.classList.contains('active'), true)
+    })
+    it('does nothing when disabled', () => {
+      tab.setInactive()
+      tab.disable()
+      tab.setActive()
+      assert.equal(tab.element.classList.contains('active'), false)
     })
   })
   describe('set inactive', () => {
