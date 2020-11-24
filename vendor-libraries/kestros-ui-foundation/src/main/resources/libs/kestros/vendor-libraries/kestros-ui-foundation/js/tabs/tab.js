@@ -35,12 +35,14 @@ class Tab extends TabsElement {
   /**
    * Tab event names.
    *
-   * @returns {{TAB_ACTIVATED: string, TAB_DEACTIVATED: string}} * Tab event names.
+   * @returns {{TAB_ACTIVATED: string, TAB_DISABLE: string, TAB_DEACTIVATED: string, TAB_ENABLE: string}} - Tab event names.
    */
   static get events() {
     return {
       TAB_ACTIVATED: 'tab-activated',
-      TAB_DEACTIVATED: 'tab-deactivated'
+      TAB_DEACTIVATED: 'tab-deactivated',
+      TAB_ENABLE: 'tab-enable',
+      TAB_DISABLE: 'tab-disable'
     };
   }
 
@@ -62,7 +64,8 @@ class Tab extends TabsElement {
     return {
       detail: {
         container: this.containerName,
-        name: this.name
+        name: this.name,
+        index: this.tabIndex
       }
     };
   }
@@ -98,6 +101,32 @@ class Tab extends TabsElement {
   }
 
   /**
+   * Enables tab if event corresponds to the current tab.
+   *
+   * @param {object} event - Event.
+   */
+  enableIfRequested(event) {
+    if (event !== null && typeof event !== 'undefined' && event.detail !== null && typeof event.detail !== 'undefined') {
+      if (event.detail.container === this.containerName && (event.detail.name === this.name || event.detail.index === this.tabIndex)) {
+        this.enable();
+      }
+    }
+  }
+
+  /**
+   * Disables tab if event corresponds to the current tab.
+   *
+   * @param {object} event - Event.
+   */
+  disableIfRequested(event) {
+    if (event !== null && typeof event !== 'undefined' && event.detail !== null && typeof event.detail !== 'undefined') {
+      if (event.detail.container === this.containerName && (event.detail.name === this.name || event.detail.index === this.tabIndex)) {
+        this.disable();
+      }
+    }
+  }
+
+  /**
    * Registers tab event listeners.
    */
   registerEventListeners() {
@@ -113,6 +142,13 @@ class Tab extends TabsElement {
       this.containerElement.addEventListener(TabsContainer.events.TAB_ACTIVATE, event => {
         this.activateIfRequested(event);
       });
+      this.containerElement.addEventListener(Tab.events.TAB_ENABLE, event => {
+        this.enableIfRequested(event);
+      });
+
+      this.containerElement.addEventListener(Tab.events.TAB_DISABLE, event => {
+        this.disableIfRequested(event);
+      });
     }
 
     this.element.addEventListener('click', () => {
@@ -124,10 +160,12 @@ class Tab extends TabsElement {
    * Sets tab to active state, and fires tab-activated event.
    */
   setActive() {
-    if (!this.isActive) {
-      this.element.classList.add('active');
-      this.element.dispatchEvent(new CustomEvent(Tab.events.TAB_ACTIVATED, this.eventDetails));
-      document.dispatchEvent(new CustomEvent(Tab.events.TAB_ACTIVATED, this.eventDetails));
+    if (!this.disabled) {
+      if (!this.isActive) {
+        this.element.classList.add('active');
+        this.element.dispatchEvent(new CustomEvent(Tab.events.TAB_ACTIVATED, this.eventDetails));
+        document.dispatchEvent(new CustomEvent(Tab.events.TAB_ACTIVATED, this.eventDetails));
+      }
     }
   }
 
