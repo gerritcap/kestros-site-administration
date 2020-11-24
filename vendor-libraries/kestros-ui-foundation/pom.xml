@@ -93,16 +93,16 @@
               <arguments>test</arguments>
             </configuration>
           </execution>
-          <execution>
-            <id>eslint</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <phase>test</phase>
-            <configuration>
-              <arguments>run lint</arguments>
-            </configuration>
-          </execution>
+<!--          <execution>-->
+          <!--            <id>eslint</id>-->
+          <!--            <goals>-->
+          <!--              <goal>npm</goal>-->
+          <!--            </goals>-->
+          <!--            <phase>test</phase>-->
+          <!--            <configuration>-->
+          <!--              <arguments>run lint</arguments>-->
+          <!--            </configuration>-->
+          <!--          </execution>-->
           <execution>
             <id>npm cover:report</id>
             <goals>
@@ -139,6 +139,9 @@
             <exclude>**/*.json</exclude>
             <exclude>node/**/*</exclude>
             <exclude>node_modules/**/*</exclude>
+            <exclude>report/**/*</exclude>
+            <exclude>reports/**/*</exclude>
+            <exclude>.stryker-tmp/**/*</exclude>
             <exclude>coverage/**/*</exclude>
             <exclude>**/README.md</exclude>
             <exclude>package.json</exclude>
