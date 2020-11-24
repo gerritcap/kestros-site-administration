@@ -16,7 +16,7 @@
     ~
     */
 
-import { TabsElement } from './tab-element'
+import { TabsElement } from './tabs-element'
 
 /**
  * Tab content element. Shows when the corresponding Tab is selected.

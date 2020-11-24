@@ -1,6 +1,8 @@
 {
   "jcr:primaryType": "sling:OrderedFolder",
   "include": [
-    "greyscale.less"
+    "greyscale.less",
+    "color-palette.less",
+    "palette.less"
   ]
 }

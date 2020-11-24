@@ -1,0 +1,141 @@
+/*
+    ~      Copyright (C) 2020  Kestros, Inc.
+    ~
+    ~     This program is free software: you can redistribute it and/or modify
+    ~     it under the terms of the GNU General Public License as published by
+    ~     the Free Software Foundation, either version 3 of the License, or
+    ~     (at your option) any later version.
+    ~
+    ~     This program is distributed in the hope that it will be useful,
+    ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ~     GNU General Public License for more details.
+    ~
+    ~     You should have received a copy of the GNU General Public License
+    ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    ~
+    */
+
+@kes-red: rgb(255, 0, 80);
+@kes-green: rgb(146, 204 , 10);
+@kes-yellow: rgb(255, 160, 15); // contrast for Blue Dark
+@kes-blue-light: rgb(0, 160, 255);
+@kes-blue-mid: rgb(0, 160, 255);
+@kes-blue-mid--2: rgb(0, 100, 255);
+@kes-ui-blue-dark: rgb(28, 38, 48);
+@kes-ui-grey-dark: hsla(210, 10%, 15%, 1); // main action bar / ribbon / notifications
+@kes-ui-grey-mid: rgb(123, 123, 123); // medium grey - same as greyscale.less
+@kes-ui-grey-mid--2: rgb(128, 128, 128); // sidebar links
+@kes-ui-grey-light--1: rgb(210, 210, 210); // collapsed sidebar spine
+//@kes-ui-grey-light--2: rgb(238, 239, 242); // sidebar
+@kes-ui-grey-light--2: hsla(40, 4%, 94%, 1); // admin UI background
+@kes-ui-grey-light--3: rgb(249, 250, 251); // admin content area
+
+@red-light--4: lighten(@red-medium, 48%);
+@red-light--3: lighten(@red-medium, 45%);
+@red-light--2: lighten(@red-medium, 40%);
+@red-light--1: lighten(@red-medium, 35%);
+@red-light: lighten(@red-medium, 20%);
+@red-medium: @kes-red;
+@red-dark: darken(@red-medium, 2%);
+@red-dark--1: darken(@red-medium, 5%);
+@red-dark--2: darken(@red-medium, 15%);
+@red-dark--3: darken(@red-medium, 25%);
+@red-dark--4: darken(@red-medium, 35%);
+
+@green-light--4: lighten(@green-medium, 48%);
+@green-light--3: lighten(@green-medium, 45%);
+@green-light--2: lighten(@green-medium, 40%);
+@green-light--1: lighten(@green-medium, 35%);
+@green-light: lighten(@green-medium, 20%);
+@green-medium: @kes-green;
+@green-dark: darken(@green-medium, 2%);
+@green-dark--1: darken(@green-medium, 5%);
+@green-dark--2: darken(@green-medium, 15%);
+@green-dark--3: darken(@green-medium, 25%);
+@green-dark--4: darken(@green-medium, 35%);
+
+@blue-light--4: lighten(@blue-medium, 37.9216%);
+@blue-light--3: lighten(@blue-medium, 32.5490%);
+@blue-light--2: lighten(@blue-medium, 31.3725%);
+@blue-light--1: lighten(@blue-medium, 25.0980%);
+@blue-light: lighten(@blue-medium, 18.8235%);
+@blue-medium: @kes-ui-blue-dark;
+@blue-dark: darken(@blue-medium, 12.5490%);
+@blue-dark--1: darken(@blue-medium, 18.8235%);
+@blue-dark--2: darken(@blue-medium, 25.0980%);
+@blue-dark--3: darken(@blue-medium, 31.3725%);
+@blue-dark--4: darken(@blue-medium, 43.9216%);
+
+@yellow-light--4: lighten(@yellow-medium, 37.9216%);
+@yellow-light--3: lighten(@yellow-medium, 32.5490%);
+@yellow-light--2: lighten(@yellow-medium, 31.3725%);
+@yellow-light--1: lighten(@yellow-medium, 25.0980%);
+@yellow-light: lighten(@yellow-medium, 18.8235%);
+@yellow-medium: @kes-yellow;
+@yellow-dark: darken(@yellow-medium, 12.5490%);
+@yellow-dark--1: darken(@yellow-medium, 18.8235%);
+@yellow-dark--2: darken(@yellow-medium, 25.0980%);
+@yellow-dark--3: darken(@yellow-medium, 31.3725%);
+@yellow-dark--4: darken(@yellow-medium, 43.9216%);
+
+.color-splotch-card {
+  margin-bottom: 20px;
+
+  .color-splotch {
+    height: 100px;
+    .color-splotch(red-light--4, @red-light--4);
+    .color-splotch(red-light--3, @red-light--3);
+    .color-splotch(red-light--2, @red-light--2);
+    .color-splotch(red-light--1, @red-light--1);
+    .color-splotch(red-light, @red-light);
+    .color-splotch(red-medium, @red-medium);
+    .color-splotch(red-dark, @red-dark);
+    .color-splotch(red-dark--1, @red-dark--1);
+    .color-splotch(red-dark--2, @red-dark--2);
+    .color-splotch(red-dark--3, @red-dark--3);
+    .color-splotch(red-dark--4, @red-dark--4);
+
+    .color-splotch(green-light--4, @green-light--4);
+    .color-splotch(green-light--3, @green-light--3);
+    .color-splotch(green-light--2, @green-light--2);
+    .color-splotch(green-light--1, @green-light--1);
+    .color-splotch(green-light, @green-light);
+    .color-splotch(green-medium, @green-medium);
+    .color-splotch(green-dark, @green-dark);
+    .color-splotch(green-dark--1, @green-dark--1);
+    .color-splotch(green-dark--2, @green-dark--2);
+    .color-splotch(green-dark--3, @green-dark--3);
+    .color-splotch(green-dark--4, @green-dark--4);
+
+    .color-splotch(blue-light--4, @blue-light--4);
+    .color-splotch(blue-light--3, @blue-light--3);
+    .color-splotch(blue-light--2, @blue-light--2);
+    .color-splotch(blue-light--1, @blue-light--1);
+    .color-splotch(blue-light, @blue-light);
+    .color-splotch(blue-medium, @blue-medium);
+    .color-splotch(blue-dark, @blue-dark);
+    .color-splotch(blue-dark--1, @blue-dark--1);
+    .color-splotch(blue-dark--2, @blue-dark--2);
+    .color-splotch(blue-dark--3, @blue-dark--3);
+    .color-splotch(blue-dark--4, @blue-dark--4);
+
+    .color-splotch(yellow-light--4, @yellow-light--4);
+    .color-splotch(yellow-light--3, @yellow-light--3);
+    .color-splotch(yellow-light--2, @yellow-light--2);
+    .color-splotch(yellow-light--1, @yellow-light--1);
+    .color-splotch(yellow-light, @yellow-light);
+    .color-splotch(yellow-medium, @yellow-medium);
+    .color-splotch(yellow-dark, @yellow-dark);
+    .color-splotch(yellow-dark--1, @yellow-dark--1);
+    .color-splotch(yellow-dark--2, @yellow-dark--2);
+    .color-splotch(yellow-dark--3, @yellow-dark--3);
+    .color-splotch(yellow-dark--4, @yellow-dark--4);
+  }
+}
+
+.color-splotch(@name, @color) {
+  &.@{name} {
+    background-color: @color;
+  }
+}
