@@ -83,7 +83,7 @@ export class Tab extends TabsElement {
     if (event != null && typeof event !== 'undefined' && event.detail !== null &&
         typeof event.detail !== 'undefined') {
       if (event.detail.container === this.containerName) {
-        if (event.detail.name === this.name) {
+        if (event.detail.name === this.name || event.detail.index === this.tabIndex) {
           this.setActive()
         } else {
           this.setInactive()
@@ -100,9 +100,11 @@ export class Tab extends TabsElement {
   deactivateIfRequested (event) {
     if (event !== null && typeof event !== 'undefined' && event.detail !== null &&
         typeof event.detail !== 'undefined') {
-      if (event.detail.container === this.containerName && event.detail.name ===
-          this.name) {
-        this.setInactive()
+      if (event.detail.container === this.containerName) {
+        if (event.detail.name === this.name || event.detail.index ===
+            this.tabIndex) {
+          this.setInactive()
+        }
       }
     }
   }
@@ -165,9 +167,11 @@ export class Tab extends TabsElement {
     }
 
     this.element.addEventListener('click', () => {
-      this.containerElement.dispatchEvent(
-        new CustomEvent(TabsContainer.events.TAB_SELECTED,
-          this.eventDetails))
+      if (!this.disabled) {
+        this.containerElement.dispatchEvent(
+          new CustomEvent(TabsContainer.events.TAB_SELECTED,
+            this.eventDetails))
+      }
     })
   }
 
