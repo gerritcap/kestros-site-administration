@@ -17,6 +17,7 @@
 */
 
 import { TabsContainer } from '../tabs/tabs-container'
+import { Tab } from '../tabs/tab'
 
 /**
  * Step by step tabbed content.
@@ -29,7 +30,53 @@ export class Wizard extends TabsContainer {
    */
   constructor (element) {
     super(element)
-    this._currentTabIndex = 0
+    if (typeof this.element.dataset.currentTab === 'undefined') {
+      this.element.setAttribute('data-current-tab', 0)
+    }
+  }
+
+  /**
+   * Wizard object events.
+   *
+   * @returns {{WIZARD_PREVIOUS: string, WIZARD_NEXT: string}} Wizard object events.
+   */
+  static get events () {
+    return {
+      WIZARD_NEXT: 'wizard-next',
+      WIZARD_PREVIOUS: 'wizard-previous'
+    }
+  }
+
+  /**
+   * Event data associated to wizard tab selection.
+   *
+   * @returns {{detail: {container: string, index: number}}} Event data associated to wizard tab selection.
+   */
+  get event () {
+    return {
+      detail: {
+        container: this.name,
+        index: this.currentTabIndex
+      }
+    }
+  }
+
+  /**
+   * Whether the wizard blocked from proceeding to the next step.
+   *
+   * @returns {boolean} Whether the wizard blocked from proceeding to the next step.
+   */
+  get disableNext () {
+    return Boolean(this.element.dataset.disableNext)
+  }
+
+  /**
+   * Sets whether the wizard can proceed to the next step.
+   *
+   * @param {boolean} disable - Whether the wizard blocked from proceeding to the next step.
+   */
+  set disableNext (disable) {
+    this.element.setAttribute('data-disable-next', disable)
   }
 
   /**
@@ -47,7 +94,7 @@ export class Wizard extends TabsContainer {
    * @returns {number} Currently selected tab.
    */
   get currentTabIndex () {
-    return this._currentTabIndex
+    return Number(this.element.dataset.currentTab)
   }
 
   /**
@@ -56,19 +103,7 @@ export class Wizard extends TabsContainer {
    * @param {number} index - Value to set.
    */
   set currentTabIndex (index) {
-    this._currentTabIndex = index
-  }
-
-  /**
-   * Wizard object events.
-   *
-   * @returns {{WIZARD_PREVIOUS: string, WIZARD_NEXT: string}} Wizard object events.
-   */
-  static getEvents () {
-    return {
-      WIZARD_NEXT: 'wizard-next',
-      WIZARD_PREVIOUS: 'wizard-previous'
-    }
+    this.element.setAttribute('data-current-tab', Number(index))
   }
 
   /**
@@ -77,13 +112,25 @@ export class Wizard extends TabsContainer {
   registerEventListeners () {
     super.registerEventListeners()
 
-    document.addEventListener(Wizard.getEvents().WIZARD_NEXT, (event) => {
+    document.addEventListener(Wizard.events.WIZARD_NEXT, event => {
       if (event.detail.wizard === this.name) {
         this.selectNextTab()
       }
     })
 
-    document.addEventListener(Wizard.getEvents().WIZARD_PREVIOUS, (event) => {
+    this.element.addEventListener(Wizard.events.WIZARD_NEXT, event => {
+      if (event.detail.wizard === this.name) {
+        this.selectNextTab()
+      }
+    })
+
+    document.addEventListener(Wizard.events.WIZARD_PREVIOUS, event => {
+      if (event.detail.wizard === this.name) {
+        this.selectPreviousTab()
+      }
+    })
+
+    this.element.addEventListener(Wizard.events.WIZARD_PREVIOUS, event => {
       if (event.detail.wizard === this.name) {
         this.selectPreviousTab()
       }
@@ -94,8 +141,12 @@ export class Wizard extends TabsContainer {
    * Selects next tab.
    */
   selectNextTab () {
-    if (this.currentTabIndex !== this.tabCount - 1) {
+    if (!this.disableNext && this.currentTabIndex !== this.tabCount - 1) {
       this.currentTabIndex = this.currentTabIndex + 1
+      this.element.dispatchEvent(
+        new CustomEvent(Tab.events.TAB_ENABLE, this.event))
+      this.element.dispatchEvent(
+        new CustomEvent(TabsContainer.events.TAB_SELECTED, this.event))
     }
   }
 
@@ -105,6 +156,8 @@ export class Wizard extends TabsContainer {
   selectPreviousTab () {
     if (this.currentTabIndex !== 0) {
       this.currentTabIndex = this.currentTabIndex - 1
+      this.element.dispatchEvent(
+        new CustomEvent(TabsContainer.events.TAB_SELECTED, this.event))
     }
   }
 }
