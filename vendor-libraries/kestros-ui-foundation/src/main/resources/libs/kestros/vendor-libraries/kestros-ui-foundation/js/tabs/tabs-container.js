@@ -47,6 +47,7 @@ class TabsContainer extends InteractiveElement {
    * Helper for building event objects.
    *
    * @param {string} tabName - Tab to trigger event on.
+   * @param {integer} tabIndex - Index of tab to trigger event on.
    * @returns {{detail: {container: string, name: *}}} Helper for building event objects.
    */
   getEvent(tabName, tabIndex) {
