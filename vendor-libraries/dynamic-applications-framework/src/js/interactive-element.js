@@ -37,8 +37,7 @@ export class InteractiveElement {
   get disabled () {
     if (this.element !== null && typeof this.element !== 'undefined') {
       return this.element.disabled || this.element.getAttribute('disabled') ===
-          '' || this.element.classList.contains(
-        'disabled')
+          '' || this.element.classList.contains('disabled')
     }
     return false
   }
@@ -72,6 +71,7 @@ export class InteractiveElement {
   disable () {
     if (this.element !== null && typeof this.element !== 'undefined') {
       this.element.disabled = true
+      this.element.classList.add('disabled')
     }
   }
 
@@ -81,6 +81,7 @@ export class InteractiveElement {
   enable () {
     if (this.element !== null && typeof this.element !== 'undefined') {
       this.element.disabled = false
+      this.element.classList.remove('disabled')
     }
   }
 
