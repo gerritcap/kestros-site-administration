@@ -3,6 +3,8 @@
   "include": [
     "alert/alert.js",
     "badge/badge.js",
+    "notifications/notification.js",
+    "notifications/notification-board.js",
     "tabs/tabs-element.js",
     "tabs/tabs-container.js",
     "tabs/tab.js",
