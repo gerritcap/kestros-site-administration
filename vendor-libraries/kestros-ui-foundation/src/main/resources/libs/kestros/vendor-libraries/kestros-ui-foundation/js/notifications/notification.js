@@ -1,22 +1,36 @@
 /*
-      ~      Copyright (C) 2020  Kestros, Inc.
-      ~
-      ~     This program is free software: you can redistribute it and/or modify
-      ~     it under the terms of the GNU General Public License as published by
-      ~     the Free Software Foundation, either version 3 of the License, or
-      ~     (at your option) any later version.
-      ~
-      ~     This program is distributed in the hope that it will be useful,
-      ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-      ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      ~     GNU General Public License for more details.
-      ~
-      ~     You should have received a copy of the GNU General Public License
-      ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-      ~
-      */
+~      Copyright (C) 2020  Kestros, Inc.
+~
+~     This program is free software: you can redistribute it and/or modify
+~     it under the terms of the GNU General Public License as published by
+~     the Free Software Foundation, either version 3 of the License, or
+~     (at your option) any later version.
+~
+~     This program is distributed in the hope that it will be useful,
+~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+~     GNU General Public License for more details.
+~
+~     You should have received a copy of the GNU General Public License
+~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+~
+*/
 
+/**
+ * Notification which is created by and rendered withing a NotificationBoard.
+ */
 class Notification {
+  /**
+   * Constructs and renders a new notification element.
+   *
+   * @param {string} title - Title.
+   * @param {string} message - Message.
+   * @param {string} url - URL.
+   * @param {string} type - Type.
+   * @param {integer} expirationTime - Time before notification automatically closes.
+   * @param {integer} index - Notification index.
+   * @param {NotificationBoard} board - Parent board.
+   */
   constructor(title, message, url, type, expirationTime, index, board) {
     this._title = title;
     this._message = message;
@@ -27,45 +41,93 @@ class Notification {
     this._board = board;
   }
 
+  /**
+   * Notification events.
+   *
+   * @returns {{CLEAR_NOTIFICATION: string}} Notification events.
+   */
   static get events() {
     return {
       CLEAR_NOTIFICATION: 'clear-notification'
     };
   }
 
+  /**
+   * Notification DOM element.
+   *
+   * @returns {HTMLDivElement} Notification DOM element.
+   */
   get element() {
     return this._element;
   }
 
+  /**
+   * Notification close icon element.
+   *
+   * @returns {Element} Notification close icon element.
+   */
   get closeIcon() {
     return this._element.querySelector('.notification__close-icon');
   }
 
+  /**
+   * Notification title.
+   *
+   * @returns {string} Notification title.
+   */
   get title() {
     return this.element.dataset.title;
   }
 
+  /**
+   * Notification message.
+   *
+   * @returns {string} Notification message.
+   */
   get message() {
     return this.element.dataset.message;
   }
 
+  /**
+   * Notification expiration time.
+   *
+   * @returns {integer} Notification expiration time.
+   */
   get expirationTime() {
     return this.element.dataset.exiprationTime;
   }
 
+  /**
+   * Notification type.
+   *
+   * @returns {string} Notification type.
+   */
   get type() {
     return this.element.dataset.type;
   }
 
+  /**
+   * Notification index.
+   *
+   * @returns {integer} Notification index.
+   */
+  get index() {
+    return this.element.dataset.index;
+  }
+
+  /**
+   * Sets the notification index.
+   *
+   * @param {integer} index - New index value.
+   */
   set index(index) {
     this._index = index;
     this.element.setAttribute('data-index', index);
   }
 
-  get index() {
-    return this.element.dataset.index;
-  }
-
+  /**
+   * Creates the notification DOM elements.
+   */
   create() {
     const notification = document.createElement('div');
 
@@ -115,6 +177,9 @@ class Notification {
     this.registerEventListeners();
   }
 
+  /**
+   * Registers notification event listeners.
+   */
   registerEventListeners() {
     const notification = this;
     this.closeIcon.addEventListener('click', () => {

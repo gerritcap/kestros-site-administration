@@ -57,44 +57,64 @@ class NotificationBoard extends InteractiveElement {
     };
   }
 
+  /**
+   * Registers notification board event listeners.
+   */
   registerEventListeners() {
     super.registerEventListeners();
-    document.addEventListener(NotificationBoard.events.CREATE_NOTIFICATION,
-        event => {
-          for (const key of Object.keys(NotificationBoard.notificationLevels)) {
-            if (event.detail.type
-                === NotificationBoard.notificationLevels[key]) {
-              this.createNotification(event.detail.title, event.detail.message,
-                  event.detail.url, event.detail.type, event.detail.timeToLive);
-            }
-          }
-        });
-    document.addEventListener(NotificationBoard.events.CLEAR_NOTIFICATION,
-        event => {
-          this.removeNotification(event.detail.title, event.detail.message,
-              event.detail.type);
-        });
+    document.addEventListener(NotificationBoard.events.CREATE_NOTIFICATION, event => {
+      for (const key of Object.keys(NotificationBoard.notificationLevels)) {
+        if (event.detail.type === NotificationBoard.notificationLevels[key]) {
+          this.createNotification(event.detail.title, event.detail.message, event.detail.url, event.detail.type, event.detail.timeToLive);
+        }
+      }
+    });
+    document.addEventListener(NotificationBoard.events.CLEAR_NOTIFICATION, event => {
+      this.removeNotification(event.detail.title, event.detail.message, event.detail.type);
+    });
   }
 
+  /**
+   * Retrieves a specified notification.
+   *
+   * @param {string} title - Notification title.
+   * @param {string} message - Notification message.
+   * @param {string} type - Notification type.
+   * @returns {null|*} The specified notification.
+   */
   getNotification(title, message, type) {
     for (const notification of this.currentNotifications) {
-      if (notification.title === title && notification.message === message
-          && notification.type === type) {
+      if (notification.title === title && notification.message === message && notification.type === type) {
         return notification;
       }
     }
     return null;
   }
 
+  /**
+   * Creates and renders new notifications/.
+   *
+   * @param {string} title - Notification title.
+   * @param {string} message - Notification message.
+   * @param {string} url - Notification ul.
+   * @param {string} type - Notification type.
+   * @param {integer} timeToLive - Time before the notification automatically closes.
+   */
   createNotification(title, message, url, type, timeToLive) {
     if (this.getNotification(title, message, type) === null) {
-      const notification = new Notification(title, message, url, type,
-          timeToLive, this.currentNotifications.length, this);
+      const notification = new Notification(title, message, url, type, timeToLive, this.currentNotifications.length, this);
       this.currentNotifications.push(notification);
       notification.create();
     }
   }
 
+  /**
+   * Removes a specified notification.
+   *
+   * @param {string} title - Notification title.
+   * @param {string} message - Notification message.
+   * @param {string} type - Notification type.
+   */
   removeNotification(title, message, type) {
     const notification = this.getNotification(title, message, type);
     if (notification !== null) {
@@ -104,14 +124,18 @@ class NotificationBoard extends InteractiveElement {
     this.resetIndexes();
   }
 
+  /**
+   * Removes all notifications.
+   */
   removeAllNotifications() {
     for (let i = this.currentNotifications.length - 1; i >= 0; i--) {
-      this.removeNotification(this.currentNotifications[i].title,
-          this.currentNotifications[i].message,
-          this.currentNotifications[i].type);
+      this.removeNotification(this.currentNotifications[i].title, this.currentNotifications[i].message, this.currentNotifications[i].type);
     }
   }
 
+  /**
+   * Rewrites the index data for all existing notifications.
+   */
   resetIndexes() {
     let index = 0;
     for (const notification of this.currentNotifications) {
