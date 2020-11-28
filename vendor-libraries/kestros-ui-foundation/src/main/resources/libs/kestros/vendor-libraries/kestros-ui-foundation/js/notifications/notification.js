@@ -183,7 +183,7 @@ class Notification {
   registerEventListeners() {
     const notification = this;
     this.closeIcon.addEventListener('click', () => {
-      this._board.element.dispatchEvent(new CustomEvent(NotificationBoard.events.CLEAR_NOTIFICATION, {
+      document.dispatchEvent(new CustomEvent(NotificationBoard.events.CLEAR_NOTIFICATION, {
         detail: {
           title: this.title,
           message: this.message,
@@ -193,7 +193,7 @@ class Notification {
     });
     if (this.expirationTime > 0) {
       setTimeout(function () {
-        this._board.element.dispatchEvent(new CustomEvent(NotificationBoard.events.CLEAR_NOTIFICATION, {
+        document.dispatchEvent(new CustomEvent(NotificationBoard.events.CLEAR_NOTIFICATION, {
           detail: {
             title: this.title,
             message: this.message,
