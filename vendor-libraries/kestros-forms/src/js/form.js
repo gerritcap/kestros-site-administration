@@ -33,10 +33,8 @@ export class Form extends InteractiveElement {
     super(element)
     this._submitButton = null
     this._validationAlert = null
-    
+
     const submitButtonElement = this.element.querySelector('button.submit')
-
-
 
     if (submitButtonElement !== null && typeof submitButtonElement !==
         'undefined') {
@@ -100,9 +98,9 @@ export class Form extends InteractiveElement {
    * @returns {Alert} Validation Message if the form fails backend validation.
    */
   get validationMessage () {
-    if(this._validationAlert === null) {
-      let validationAlertElement = this.element.querySelector(
-          '.validation-message')
+    if (this._validationAlert === null) {
+      const validationAlertElement = this.element.querySelector(
+        '.validation-message')
       if (validationAlertElement !== null && typeof validationAlertElement !==
           'undefined') {
         this._validationAlert = new Alert(validationAlertElement)
@@ -232,14 +230,14 @@ export class Form extends InteractiveElement {
           body: this.data,
           credentials: 'same-origin'
         }).then((response) => {
-            if (response.ok) {
-              form.onSuccess(response)
-            } else {
-              form.submissionError(response)
-            }
-          }).catch((error) => {
-            this.submissionError(error)
-          })
+          if (response.ok) {
+            form.onSuccess(response)
+          } else {
+            form.submissionError(response)
+          }
+        }).catch((error) => {
+          this.submissionError(error)
+        })
       } else {
         this.setInvalid(this.invalidMessage)
       }
