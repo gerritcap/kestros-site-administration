@@ -174,7 +174,7 @@ export class InputField extends InteractiveElement {
     // Listens for the form to trigger its `validate` event.
     if (this.formElement !== null && typeof this.formElement !== 'undefined') {
       this.formElement.addEventListener(Form.dispatchedEvents.FORM_VALIDATE,
-        (e) => {
+        () => {
           this.element.dispatchEvent(new Event(InputField.events.VALIDATE))
         })
     }
