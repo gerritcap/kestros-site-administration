@@ -1,0 +1,9 @@
+{
+  "jcr:primaryType": "sling:OrderedFolder",
+  "include": [
+    "base-validator.js",
+    "form.js",
+    "input-field.js",
+    "submit-button.js"
+  ]
+}
