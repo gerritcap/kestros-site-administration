@@ -39,6 +39,7 @@
     <module>dynamic-applications-framework</module>
     <module>kestros-color-palette</module>
     <module>kestros-ui-foundation</module>
+    <module>kestros-forms</module>
   </modules>
 
 </project>
