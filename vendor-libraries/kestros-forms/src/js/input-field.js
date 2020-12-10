@@ -57,11 +57,12 @@ export class InputField extends InteractiveElement {
   /**
    * Events that the InputField object can trigger/dispatch.
    *
-   * @returns {{RUN_VALIDATORS: string}} Events that the InputField object can trigger/dispatch.
+   * @returns {{VALIDATION_AFTER: string, RUN_VALIDATORS: string}}Events that the InputField object can trigger/dispatch.
    */
   static get dispatchedEvents () {
     return {
-      RUN_VALIDATORS: 'run-validators'
+      RUN_VALIDATORS: 'run-validators',
+      VALIDATION_AFTER: 'field-validation-after'
     }
   }
 
@@ -228,5 +229,10 @@ export class InputField extends InteractiveElement {
           }
         }))
     }
+    this.element.dispatchEvent(new CustomEvent(InputField.dispatchedEvents.VALIDATION_AFTER, {
+      detail: {
+        valid: this.isValid
+      }
+    }))
   }
 }

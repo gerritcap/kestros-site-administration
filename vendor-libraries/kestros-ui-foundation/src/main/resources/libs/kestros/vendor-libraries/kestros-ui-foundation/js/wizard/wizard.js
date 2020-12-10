@@ -45,6 +45,18 @@ class Wizard extends TabsContainer {
   }
 
   /**
+   * Events that the Wizard can dispatch.
+   *
+   * @returns {{SELECTED_FINAL_TAB: string, DESELECTED_FINAL_TAB: string}} Events that the Wizard can dispatch.
+   */
+  static get dispatchedEvents() {
+    return {
+      SELECTED_FINAL_TAB: 'wizard-selected-final-tab',
+      DESELECTED_FINAL_TAB: 'wizard-deselected-final-tab'
+    };
+  }
+
+  /**
    * Event data associated to wizard tab selection.
    *
    * @returns {{detail: {container: string, index: number}}} Event data associated to wizard tab selection.
@@ -64,7 +76,7 @@ class Wizard extends TabsContainer {
    * @returns {boolean} Whether the wizard blocked from proceeding to the next step.
    */
   get disableNext() {
-    return Boolean(this.element.dataset.disableNext);
+    return Boolean(this.element.dataset.disableNext === 'true' || this.element.dataset.disableNext === true);
   }
 
   /**
@@ -138,10 +150,15 @@ class Wizard extends TabsContainer {
    * Selects next tab.
    */
   selectNextTab() {
-    if (!this.disableNext && this.currentTabIndex !== this.tabCount - 1) {
-      this.currentTabIndex = this.currentTabIndex + 1;
-      this.element.dispatchEvent(new CustomEvent(Tab.events.TAB_ENABLE, this.event));
-      this.element.dispatchEvent(new CustomEvent(TabsContainer.events.TAB_SELECTED, this.event));
+    if (!this.disableNext) {
+      if (this.currentTabIndex !== this.tabCount - 1) {
+        this.currentTabIndex = this.currentTabIndex + 1;
+        this.element.dispatchEvent(new CustomEvent(Tab.events.TAB_ENABLE, this.event));
+        this.element.dispatchEvent(new CustomEvent(TabsContainer.events.TAB_SELECTED, this.event));
+        if (this.currentTabIndex === this.tabCount - 1) {
+          this.element.dispatchEvent(new CustomEvent(Wizard.dispatchedEvents.SELECTED_FINAL_TAB));
+        }
+      }
     }
   }
 
@@ -152,6 +169,7 @@ class Wizard extends TabsContainer {
     if (this.currentTabIndex !== 0) {
       this.currentTabIndex = this.currentTabIndex - 1;
       this.element.dispatchEvent(new CustomEvent(TabsContainer.events.TAB_SELECTED, this.event));
+      this.element.dispatchEvent(new CustomEvent(Wizard.dispatchedEvents.DESELECTED_FINAL_TAB));
     }
   }
 }

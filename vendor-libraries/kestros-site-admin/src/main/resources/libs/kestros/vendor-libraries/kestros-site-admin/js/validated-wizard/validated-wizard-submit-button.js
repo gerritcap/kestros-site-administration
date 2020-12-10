@@ -17,15 +17,38 @@
 */
 
 /**
- * Wizard content element.
+ * Submit button for the ValidWizard object.
  */
-class WizardTabContent extends TabContent {
+class ValidatedWizardSubmitButton extends FormSubmitButton {
   /**
-   * Parent wizard element.
+   * Constructs the ValidatedWizardSubmitButton object.
    *
-   * @returns {null|*|Element} Parent wizard element.
+   * @param {HTMLElement} element - Element to construct from.
+   */
+  constructor(element) {
+    super(element);
+    this.hide();
+  }
+
+  /**
+   * Container wizard element.
+   *
+   * @returns {HTMLElement} Container wizard element.
    */
   get containerElement() {
     return this.element.closest('.wizard');
+  }
+
+  /**
+   * Registers validated wizard submit button event listeners.
+   */
+  registerEventListeners() {
+    super.registerEventListeners();
+    this.containerElement.addEventListener(Wizard.dispatchedEvents.SELECTED_FINAL_TAB, () => {
+      this.show();
+    });
+    this.containerElement.addEventListener(Wizard.dispatchedEvents.DESELECTED_FINAL_TAB, () => {
+      this.hide();
+    });
   }
 }
