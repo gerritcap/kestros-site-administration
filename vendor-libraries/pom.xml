@@ -40,6 +40,7 @@
     <module>kestros-color-palette</module>
     <module>kestros-ui-foundation</module>
     <module>kestros-forms</module>
+    <module>kestros-site-admin</module>
   </modules>
 
 </project>
