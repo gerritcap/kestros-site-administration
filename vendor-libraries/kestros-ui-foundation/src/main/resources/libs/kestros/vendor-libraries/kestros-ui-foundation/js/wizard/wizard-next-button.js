@@ -29,6 +29,9 @@ class WizardNextButton extends WizardButton {
     return Wizard.events.WIZARD_NEXT;
   }
 
+  /**
+   * Registers next button event listeners.
+   */
   registerEventListeners() {
     super.registerEventListeners();
 

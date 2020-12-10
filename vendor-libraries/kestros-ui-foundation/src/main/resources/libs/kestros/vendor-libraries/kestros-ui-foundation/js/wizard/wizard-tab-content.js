@@ -19,10 +19,10 @@
 /**
  * Wizard content element.
  */
-class WizardContent extends TabContent {
-
+class WizardTabContent extends TabContent {
   /**
    * Parent wizard element.
+   *
    * @returns {null|*|Element} Parent wizard element.
    */
   get containerElement() {

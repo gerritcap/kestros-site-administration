@@ -44,6 +44,11 @@ class Wizard extends TabsContainer {
     };
   }
 
+  /**
+   * Events that the Wizard can dispatch.
+   *
+   * @returns {{SELECTED_FINAL_TAB: string, DESELECTED_FINAL_TAB: string}} Events that the Wizard can dispatch.
+   */
   static get dispatchedEvents() {
     return {
       SELECTED_FINAL_TAB: 'wizard-selected-final-tab',
@@ -150,8 +155,9 @@ class Wizard extends TabsContainer {
         this.currentTabIndex = this.currentTabIndex + 1;
         this.element.dispatchEvent(new CustomEvent(Tab.events.TAB_ENABLE, this.event));
         this.element.dispatchEvent(new CustomEvent(TabsContainer.events.TAB_SELECTED, this.event));
-      } else {
-        this.element.dispatchEvent(new CustomEvent(Wizard.dispatchedEvents.SELECTED_FINAL_TAB));
+        if (this.currentTabIndex === this.tabCount - 1) {
+          this.element.dispatchEvent(new CustomEvent(Wizard.dispatchedEvents.SELECTED_FINAL_TAB));
+        }
       }
     }
   }
