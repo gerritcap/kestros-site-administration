@@ -37,10 +37,14 @@ class ValidatedWizardTab extends WizardTab {
    */
   static get classes() {
     return {
-      SUCCESS: 'wizard-tab__success',
-      ERROR: 'wizard-tab__error',
-      WARNING: 'wizard-tab__warning'
+      SUCCESS: 'success',
+      ERROR: 'error',
+      WARNING: 'warning'
     };
+  }
+
+  get validationStatusElement() {
+    return this.element.querySelector('.wizard-validation');
   }
 
   /**
@@ -84,9 +88,9 @@ class ValidatedWizardTab extends WizardTab {
    * @param {ValidatedWizardTab} tab - Tab to clear status of.
    */
   clearStatusOnTab(tab) {
-    tab.element.classList.remove(ValidatedWizardTab.classes.SUCCESS);
-    tab.element.classList.remove(ValidatedWizardTab.classes.ERROR);
-    tab.element.classList.remove(ValidatedWizardTab.classes.WARNING);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.SUCCESS);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.ERROR);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.WARNING);
   }
 
   /**
@@ -102,9 +106,9 @@ class ValidatedWizardTab extends WizardTab {
    * @param {ValidatedWizardTab} tab - Tab to update status of.
    */
   showSuccessOnTab(tab) {
-    tab.element.classList.add(ValidatedWizardTab.classes.SUCCESS);
-    tab.element.classList.remove(ValidatedWizardTab.classes.ERROR);
-    tab.element.classList.remove(ValidatedWizardTab.classes.WARNING);
+    tab.validationStatusElement.classList.add(ValidatedWizardTab.classes.SUCCESS);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.ERROR);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.WARNING);
   }
 
   /**
@@ -120,9 +124,9 @@ class ValidatedWizardTab extends WizardTab {
    * @param {ValidatedWizardTab} tab - Tab to update the status of.
    */
   showErrorOnTab(tab) {
-    tab.element.classList.remove(ValidatedWizardTab.classes.SUCCESS);
-    tab.element.classList.add(ValidatedWizardTab.classes.ERROR);
-    tab.element.classList.remove(ValidatedWizardTab.classes.WARNING);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.SUCCESS);
+    tab.validationStatusElement.classList.add(ValidatedWizardTab.classes.ERROR);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.WARNING);
   }
 
   /**
@@ -138,9 +142,9 @@ class ValidatedWizardTab extends WizardTab {
    * @param {ValidatedWizardTab} tab - Tab to update the status of.
    */
   showWarningOnTab(tab) {
-    tab.element.classList.remove(ValidatedWizardTab.classes.SUCCESS);
-    tab.element.classList.remove(ValidatedWizardTab.classes.ERROR);
-    tab.element.classList.add(ValidatedWizardTab.classes.WARNING);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.SUCCESS);
+    tab.validationStatusElement.classList.remove(ValidatedWizardTab.classes.ERROR);
+    tab.validationStatusElement.classList.add(ValidatedWizardTab.classes.WARNING);
   }
 
   /**
