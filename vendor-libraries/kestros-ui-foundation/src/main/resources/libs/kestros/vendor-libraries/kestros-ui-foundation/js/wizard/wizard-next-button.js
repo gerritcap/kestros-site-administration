@@ -28,4 +28,16 @@ class WizardNextButton extends WizardButton {
   get clickEventName() {
     return Wizard.events.WIZARD_NEXT;
   }
+
+  registerEventListeners() {
+    super.registerEventListeners();
+
+    this.containerElement.addEventListener(Wizard.dispatchedEvents.SELECTED_FINAL_TAB, event => {
+      this.hide();
+    });
+
+    this.containerElement.addEventListener(Wizard.dispatchedEvents.DESELECTED_FINAL_TAB, event => {
+      this.show();
+    });
+  }
 }
