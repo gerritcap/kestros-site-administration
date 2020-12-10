@@ -27,16 +27,21 @@ describe("ValidatedWizardTab", () => {
   let wizardElement = null
   let tabElement = null
   let wizardTab = null
+  let validationStatusElement = null
 
   beforeEach(() => {
     wizardElement = document.createElement('div')
     tabElement = document.createElement('div')
+    validationStatusElement = document.createElement('div')
 
     wizardElement.setAttribute('data-name', 'wizard-1')
     tabElement.setAttribute('data-name', 'tab-1')
+    validationStatusElement.classList.add('wizard-validation')
+
 
     wizardElement.appendChild(tabElement)
     wizardElement.classList.add('wizard')
+    tabElement.appendChild(validationStatusElement)
 
     wizardTab = new ValidatedWizardTab(tabElement)
     wizardTab.registerEventListeners()
@@ -48,40 +53,40 @@ describe("ValidatedWizardTab", () => {
 
   describe('state changes', () => {
     beforeEach(() => {
-      tabElement.classList.add('wizard-tab__success')
-      tabElement.classList.add('wizard-tab__error')
-      tabElement.classList.add('wizard-tab__warning')
+      validationStatusElement.classList.add('success')
+      tabElement.classList.add('error')
+      tabElement.classList.add('warning')
     })
 
     it('clearStatusOnTab removes all states', () => {
       wizardTab.clearStatus(wizardTab)
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
 
     it('showSuccessOnTab shows only success class', () => {
       wizardTab.showSuccess(wizardTab)
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), true)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), true)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
 
     it('showErrorOnTab shows only error class', () => {
       wizardTab.showError(wizardTab)
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), true)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), true)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
     it('showWarningOnTab shows only warning class', () => {
       wizardTab.showWarning(wizardTab)
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), true)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), true)
     })
   })
 
@@ -94,9 +99,9 @@ describe("ValidatedWizardTab", () => {
         }
       }))
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), true)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), true)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
     it('tab error', () => {
       wizardElement.dispatchEvent( new CustomEvent('wizard-tab-error', {
@@ -106,9 +111,9 @@ describe("ValidatedWizardTab", () => {
         }
       }))
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), true)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), true)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
     it('tab warning', () => {
       wizardElement.dispatchEvent( new CustomEvent('wizard-tab-warning', {
@@ -118,9 +123,9 @@ describe("ValidatedWizardTab", () => {
         }
       }))
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), true)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), true)
     })
     it('event details do not match current tab (wrong wizard)', () => {
       wizardElement.dispatchEvent( new CustomEvent('wizard-tab-success', {
@@ -130,9 +135,9 @@ describe("ValidatedWizardTab", () => {
         }
       }))
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
 
     it('event details do not match current tab (wrong tab)', () => {
@@ -143,9 +148,9 @@ describe("ValidatedWizardTab", () => {
         }
       }))
 
-      assert.equal(tabElement.classList.contains('wizard-tab__success'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__error'), false)
-      assert.equal(tabElement.classList.contains('wizard-tab__warning'), false)
+      assert.equal(validationStatusElement.classList.contains('success'), false)
+      assert.equal(validationStatusElement.classList.contains('error'), false)
+      assert.equal(validationStatusElement.classList.contains('warning'), false)
     })
   })
 })

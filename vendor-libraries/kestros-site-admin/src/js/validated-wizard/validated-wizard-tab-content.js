@@ -48,6 +48,17 @@ export class ValidatedWizardTabContent extends WizardTabContent {
     return true
   }
 
+  get eventDetails () {
+    return {
+      detail: {
+        container: this.containerName,
+        wizard: this.containerName,
+        name: this.name,
+        tabIndex: this.tabIndex
+      }
+    }
+  }
+
   /**
    * Registers ValidatedWizardTabContent event listeners.
    */

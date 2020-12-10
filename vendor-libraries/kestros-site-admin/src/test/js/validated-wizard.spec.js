@@ -140,12 +140,9 @@ describe("ValidatedWizard", () => {
         let count = 0
 
         wizardElement.addEventListener('wizard-validate-tab', (event) => {
-          console.log('heard validate')
-          console.log(event.detail)
           count++
         })
 
-        console.log('fire')
         wizardElement.dispatchEvent(new CustomEvent('wizard-next', {
           detail: {
             wizard: 'wizard-1'
