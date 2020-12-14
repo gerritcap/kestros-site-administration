@@ -21,7 +21,7 @@ let assert = require('assert');
 
 jsdom({url: 'http://localhost'})
 
-import {ValidatedWizardSubmitButton} from '../../js/validated-wizard/validated-wizard-submit-button'
+import {ValidatedWizardSubmitButton} from '../../../js/validated-wizard/validated-wizard-submit-button'
 
 describe("ValidatedWizardSubmitButton", () => {
   let wizardElement = null
