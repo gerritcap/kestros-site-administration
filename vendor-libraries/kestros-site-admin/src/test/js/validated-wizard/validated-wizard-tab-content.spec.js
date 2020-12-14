@@ -21,7 +21,7 @@ let assert = require('assert');
 
 jsdom({url: 'http://localhost'})
 
-import { ValidatedWizardTabContent } from '../../js/validated-wizard/validated-wizard-tab-content'
+import { ValidatedWizardTabContent } from '../../../js/validated-wizard/validated-wizard-tab-content'
 
 describe("ValidatedWizardTabContent", () => {
   let wizardElement = null

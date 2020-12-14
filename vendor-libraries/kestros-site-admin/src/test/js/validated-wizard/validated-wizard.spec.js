@@ -21,7 +21,7 @@ let assert = require('assert');
 
 jsdom({url: 'http://localhost'})
 
-import {ValidatedWizard} from '../../js/validated-wizard/validated-wizard'
+import {ValidatedWizard} from '../../../js/validated-wizard/validated-wizard'
 
 describe("ValidatedWizard", () => {
   let wizardElement = null
