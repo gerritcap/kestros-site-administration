@@ -46,7 +46,7 @@ export class ValidatedWizardTab extends WizardTab {
     }
   }
 
-  get validationStatusElement() {
+  get validationStatusElement () {
     return this.element.querySelector('.wizard-validation')
   }
 

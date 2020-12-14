@@ -1,6 +1,7 @@
 {
   "jcr:primaryType": "sling:OrderedFolder",
   "include": [
+    "sidebar/sidebar.js",
     "validated-wizard/validated-wizard.js",
     "validated-wizard/validated-wizard-tab.js",
     "validated-wizard/validated-wizard-tab-content.js",
