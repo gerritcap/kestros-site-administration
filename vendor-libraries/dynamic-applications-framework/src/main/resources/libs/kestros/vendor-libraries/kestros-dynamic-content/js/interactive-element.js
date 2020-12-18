@@ -30,13 +30,39 @@ class InteractiveElement {
   }
 
   /**
+   * Classes applied to generic interactive elements.
+   *
+   * @returns {{DISABLED: string, HIDDEN: string}} Classes applied to generic interactive elements.
+   */
+  static get classes() {
+    return {
+      HIDDEN: 'hidden',
+      DISABLED: 'disabled'
+    };
+  }
+
+  /**
+   * Events that generic interactive elements listen for.
+   *
+   * @returns {{DISABLE: string, HIDE: string, SHOW: string, ENABLE: string}} Events that generic interactive elements listen for.
+   */
+  static get events() {
+    return {
+      SHOW: 'element-show',
+      HIDE: 'element-hide',
+      ENABLE: 'element-enable',
+      DISABLE: 'element-disable'
+    };
+  }
+
+  /**
    * Whether the current element is disabled.
    *
    * @returns {*|boolean} Whether the current element is disabled.
    */
   get disabled() {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      return this.element.disabled || this.element.getAttribute('disabled') === '' || this.element.classList.contains('disabled');
+      return this.element.disabled || this.element.getAttribute('disabled') === '' || this.element.classList.contains(InteractiveElement.classes.DISABLED);
     }
     return false;
   }
@@ -48,7 +74,7 @@ class InteractiveElement {
    */
   get isVisible() {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      return !this.element.classList.contains(InteractiveElement.CLASS_HIDDEN);
+      return !this.element.classList.contains(InteractiveElement.classes.HIDDEN);
     }
     return false;
   }
@@ -70,7 +96,7 @@ class InteractiveElement {
   disable() {
     if (this.element !== null && typeof this.element !== 'undefined') {
       this.element.disabled = true;
-      this.element.classList.add('disabled');
+      this.element.classList.add(InteractiveElement.classes.DISABLED);
     }
   }
 
@@ -89,7 +115,7 @@ class InteractiveElement {
    */
   show() {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      this.element.classList.remove(InteractiveElement.CLASS_HIDDEN);
+      this.element.classList.remove(InteractiveElement.classes.HIDDEN);
     }
   }
 
@@ -98,7 +124,7 @@ class InteractiveElement {
    */
   hide() {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      this.element.classList.add(InteractiveElement.CLASS_HIDDEN);
+      this.element.classList.add(InteractiveElement.classes.HIDDEN);
     }
   }
 
@@ -132,7 +158,20 @@ class InteractiveElement {
    * Registers event listeners that are to be added during element registration.
    * Should be overwritten by extending classes when needed.
    */
-  registerEventListeners() {}
+  registerEventListeners() {
+    if (this.element !== null) {
+      this.element.addEventListener(InteractiveElement.events.SHOW, () => {
+        this.show();
+      });
+      this.element.addEventListener(InteractiveElement.events.HIDE, () => {
+        this.hide();
+      });
+      this.element.addEventListener(InteractiveElement.events.ENABLE, () => {
+        this.enable();
+      });
+      this.element.addEventListener(InteractiveElement.events.DISABLE, () => {
+        this.disable();
+      });
+    }
+  }
 }
-
-InteractiveElement.CLASS_HIDDEN = 'hidden';
