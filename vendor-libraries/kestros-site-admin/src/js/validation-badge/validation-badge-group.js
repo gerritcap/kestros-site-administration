@@ -23,6 +23,12 @@ import { Badge } from 'kestros-ui-foundation/src/js/badge/badge'
  * Badge group consisting of an error and warning validator badge.
  */
 export class ValidationBadgeGroup extends InteractiveElement {
+
+  constructor(element) {
+    super(element);
+    this.update()
+  }
+
   /**
    * Events the ValidationBadgeGroup listens for.
    *
@@ -37,6 +43,10 @@ export class ValidationBadgeGroup extends InteractiveElement {
       REDUCE_SIZE_ALL: 'reduce-size',
       ENLARGE_ALL: 'enlarge'
     }
+  }
+
+  get dependentElements() {
+    return [this.errorBadgeElement, this.warningBadgeElement]
   }
 
   /**
