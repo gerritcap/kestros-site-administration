@@ -26,7 +26,6 @@ export class ValidationBadgeGroup extends InteractiveElement {
 
   constructor(element) {
     super(element);
-    this.update()
   }
 
   /**
@@ -201,6 +200,10 @@ export class ValidationBadgeGroup extends InteractiveElement {
       () => {
         this.dispatchEventOnAllBadges(Badge.events.ENLARGE)
       })
+
+    this.element.addEventListener(InteractiveElement.dispatchedEvents.READY, () => {
+      this.update()
+    })
 
     this.element.addEventListener(ValidationBadgeGroup.events.UPDATE, () => {
       this.update()
