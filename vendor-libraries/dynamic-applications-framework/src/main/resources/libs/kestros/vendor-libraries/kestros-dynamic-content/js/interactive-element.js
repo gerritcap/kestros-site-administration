@@ -1,20 +1,20 @@
 /*
-  ~      Copyright (C) 2020  Kestros, Inc.
-  ~
-  ~     This program is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU General Public License as published by
-  ~     the Free Software Foundation, either version 3 of the License, or
-  ~     (at your option) any later version.
-  ~
-  ~     This program is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU General Public License
-  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  ~
-  */
+~      Copyright (C) 2020  Kestros, Inc.
+~
+~     This program is free software: you can redistribute it and/or modify
+~     it under the terms of the GNU General Public License as published by
+~     the Free Software Foundation, either version 3 of the License, or
+~     (at your option) any later version.
+~
+~     This program is distributed in the hope that it will be useful,
+~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+~     GNU General Public License for more details.
+~
+~     You should have received a copy of the GNU General Public License
+~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+~
+*/
 
 /**
  * Baseline class for interactive elements.
@@ -53,6 +53,26 @@ class InteractiveElement {
       ENABLE: 'element-enable',
       DISABLE: 'element-disable'
     };
+  }
+
+  /**
+   * Events that a generic interactive element can dispatch.
+   *
+   * @returns {{READY: string}} Events that a generic interactive element can dispatch.
+   */
+  static get dispatchedEvents() {
+    return {
+      READY: 'element-ready'
+    };
+  }
+
+  /**
+   * Elements that the InteractiveElement will wait to trigger their own ready event, before triggering its own ready event.
+   *
+   * @returns {*[]} Elements that the InteractiveElement will wait to trigger their own ready event, before triggering its own ready event.
+   */
+  get dependentElements() {
+    return [];
   }
 
   /**
@@ -135,8 +155,26 @@ class InteractiveElement {
     if (!this.isRegistered()) {
       if (this.element !== null && typeof this.element !== 'undefined') {
         this.element.dataset.registered = 'true';
+
+        this.registerEventListeners();
+        if (this.dependentElements.length === 0) {
+          this.element.dispatchEvent(new CustomEvent(InteractiveElement.dispatchedEvents.READY));
+        } else {
+          for (const dependentElement of this.dependentElements) {
+            dependentElement.addEventListener(InteractiveElement.dispatchedEvents.READY, () => {
+              let allRegistered = true;
+              for (const dependentElement of this.dependentElements) {
+                if (dependentElement.dataset.registered !== 'true' && dependentElement.dataset.registered !== true) {
+                  allRegistered = false;
+                }
+              }
+              if (allRegistered) {
+                this.element.dispatchEvent(new CustomEvent(InteractiveElement.dispatchedEvents.READY));
+              }
+            });
+          }
+        }
       }
-      this.registerEventListeners();
     }
   }
 
