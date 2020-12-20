@@ -48,6 +48,11 @@ export class ValidatedWizardTabContent extends WizardTabContent {
     return true
   }
 
+  /**
+   * Event details object.
+   *
+   * @returns {{detail: {container: (string|undefined), name: string, wizard: (string|undefined), tabIndex: number}}} Event details object.
+   */
   get eventDetails () {
     return {
       detail: {

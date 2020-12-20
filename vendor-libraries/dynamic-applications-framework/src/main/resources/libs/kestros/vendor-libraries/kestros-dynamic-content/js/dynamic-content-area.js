@@ -1,4 +1,20 @@
-
+/*
+~      Copyright (C) 2020  Kestros, Inc.
+~
+~     This program is free software: you can redistribute it and/or modify
+~     it under the terms of the GNU General Public License as published by
+~     the Free Software Foundation, either version 3 of the License, or
+~     (at your option) any later version.
+~
+~     This program is distributed in the hope that it will be useful,
+~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+~     GNU General Public License for more details.
+~
+~     You should have received a copy of the GNU General Public License
+~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+~
+*/
 
 /**
  * Container element which can dynamically load in content from an external resource.
@@ -15,12 +31,24 @@ class DynamicContentArea extends InteractiveElement {
     this.allowedErrorRetries = 3;
     this._loader = null;
     this._contentArea = null;
+    this._errorMessage = null;
     if (this.element !== null && typeof this.element !== 'undefined') {
       if (typeof this.element.dataset.allowedErrorRetries !== 'undefined') {
         this.allowedErrorRetries = this.element.dataset.allowedErrorRetries;
       }
       this.errorRetryCount = 0;
     }
+  }
+
+  /**
+   * Events that the DynamicContentArea listens for.
+   *
+   * @returns {{REFRESH: string}} Events that the DynamicContentArea listens for.
+   */
+  static get events() {
+    return {
+      REFRESH: 'dynamic-content-refresh'
+    };
   }
 
   /**
@@ -55,6 +83,19 @@ class DynamicContentArea extends InteractiveElement {
   }
 
   /**
+   * Whether to prevent load on construction. Loading will have to be triggered manually.
+   *
+   * @returns {boolean} Whether to prevent load on construction.
+   */
+  get preventLoad() {
+    let preventLoad = false;
+    if (this.element.dataset.preventLoad !== null && typeof this.element.dataset.preventLoad !== 'undefined') {
+      preventLoad = this.element.dataset.preventLoad;
+    }
+    return preventLoad;
+  }
+
+  /**
    * The loader Element associated to the current section.
    *
    * @returns {InteractiveElement} Loader Element.
@@ -83,6 +124,20 @@ class DynamicContentArea extends InteractiveElement {
   }
 
   /**
+   * Error message element.
+   *
+   * @returns {null|InteractiveElement} Error message element.
+   */
+  get errorMessage() {
+    if (this._errorMessage === null) {
+      if (this.element !== null && typeof this.element !== 'undefined') {
+        this._errorMessage = new InteractiveElement(this.element.querySelector('.error-message'));
+      }
+    }
+    return this._errorMessage;
+  }
+
+  /**
    * Whether the section is currently loading.
    *
    * @returns {boolean} Whether the section is currently loading.
@@ -102,8 +157,10 @@ class DynamicContentArea extends InteractiveElement {
       if (!requestedPath.includes('.html')) {
         requestedPath += '.html';
       }
-      if (this.suffix !== null && typeof this.suffix !== 'undefined' && this.suffix !== 'undefined') {
-        requestedPath += this.suffix;
+      if (!requestedPath.includes('.html/')) {
+        if (this.suffix !== null && typeof this.suffix !== 'undefined' && this.suffix !== 'undefined') {
+          requestedPath += this.suffix;
+        }
       }
       return requestedPath;
     }
@@ -125,7 +182,9 @@ class DynamicContentArea extends InteractiveElement {
    * @returns {void}
    */
   register() {
-    this.loadContent();
+    if (!this.preventLoad) {
+      this.loadContent();
+    }
     super.register();
   }
 
@@ -136,7 +195,7 @@ class DynamicContentArea extends InteractiveElement {
    */
   registerEventListeners() {
     super.registerEventListeners();
-    this.element.addEventListener('dynamic-content-refresh', () => {
+    this.element.addEventListener(DynamicContentArea.events.REFRESH, () => {
       this.loadContent();
     });
   }
@@ -208,8 +267,21 @@ class DynamicContentArea extends InteractiveElement {
             this.errorRetryCount = 0;
           }
         }
+      }).catch(() => {
+        this.showError();
       });
     }
+  }
+
+  /**
+   * Shows error message.
+   */
+  showError() {
+    this.element.style.height = '';
+    this.element.style.minHeight = '';
+    this.loader.hide();
+    this.contentArea.hide();
+    this.errorMessage.show();
   }
 
   /**
@@ -219,6 +291,7 @@ class DynamicContentArea extends InteractiveElement {
     this.element.style.height = this.element.offsetHeight;
     this.loader.show();
     this.contentArea.hide();
+    this.errorMessage.hide();
   }
 
   /**
@@ -229,21 +302,6 @@ class DynamicContentArea extends InteractiveElement {
     this.element.style.minHeight = '';
     this.loader.hide();
     this.contentArea.show();
+    this.errorMessage.hide();
   }
-} /*
-    ~      Copyright (C) 2020  Kestros, Inc.
-    ~
-    ~     This program is free software: you can redistribute it and/or modify
-    ~     it under the terms of the GNU General Public License as published by
-    ~     the Free Software Foundation, either version 3 of the License, or
-    ~     (at your option) any later version.
-    ~
-    ~     This program is distributed in the hope that it will be useful,
-    ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ~     GNU General Public License for more details.
-    ~
-    ~     You should have received a copy of the GNU General Public License
-    ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-    ~
-    */
+}

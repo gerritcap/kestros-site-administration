@@ -30,6 +30,52 @@ export class InteractiveElement {
   }
 
   /**
+   * Classes applied to generic interactive elements.
+   *
+   * @returns {{DISABLED: string, HIDDEN: string}} Classes applied to generic interactive elements.
+   */
+  static get classes () {
+    return {
+      HIDDEN: 'hidden',
+      DISABLED: 'disabled'
+    }
+  }
+
+  /**
+   * Events that generic interactive elements listen for.
+   *
+   * @returns {{DISABLE: string, HIDE: string, SHOW: string, ENABLE: string}} Events that generic interactive elements listen for.
+   */
+  static get events () {
+    return {
+      SHOW: 'element-show',
+      HIDE: 'element-hide',
+      ENABLE: 'element-enable',
+      DISABLE: 'element-disable'
+    }
+  }
+
+  /**
+   * Events that a generic interactive element can dispatch.
+   *
+   * @returns {{READY: string}} Events that a generic interactive element can dispatch.
+   */
+  static get dispatchedEvents () {
+    return {
+      READY: 'element-ready'
+    }
+  }
+
+  /**
+   * Elements that the InteractiveElement will wait to trigger their own ready event, before triggering its own ready event.
+   *
+   * @returns {*[]} Elements that the InteractiveElement will wait to trigger their own ready event, before triggering its own ready event.
+   */
+  get dependentElements () {
+    return []
+  }
+
+  /**
    * Whether the current element is disabled.
    *
    * @returns {*|boolean} Whether the current element is disabled.
@@ -37,7 +83,7 @@ export class InteractiveElement {
   get disabled () {
     if (this.element !== null && typeof this.element !== 'undefined') {
       return this.element.disabled || this.element.getAttribute('disabled') ===
-          '' || this.element.classList.contains('disabled')
+          '' || this.element.classList.contains(InteractiveElement.classes.DISABLED)
     }
     return false
   }
@@ -49,7 +95,7 @@ export class InteractiveElement {
    */
   get isVisible () {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      return !this.element.classList.contains(InteractiveElement.CLASS_HIDDEN)
+      return !this.element.classList.contains(InteractiveElement.classes.HIDDEN)
     }
     return false
   }
@@ -71,7 +117,7 @@ export class InteractiveElement {
   disable () {
     if (this.element !== null && typeof this.element !== 'undefined') {
       this.element.disabled = true
-      this.element.classList.add('disabled')
+      this.element.classList.add(InteractiveElement.classes.DISABLED)
     }
   }
 
@@ -90,7 +136,7 @@ export class InteractiveElement {
    */
   show () {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      this.element.classList.remove(InteractiveElement.CLASS_HIDDEN)
+      this.element.classList.remove(InteractiveElement.classes.HIDDEN)
     }
   }
 
@@ -99,7 +145,7 @@ export class InteractiveElement {
    */
   hide () {
     if (this.element !== null && typeof this.element !== 'undefined') {
-      this.element.classList.add(InteractiveElement.CLASS_HIDDEN)
+      this.element.classList.add(InteractiveElement.classes.HIDDEN)
     }
   }
 
@@ -110,8 +156,29 @@ export class InteractiveElement {
     if (!this.isRegistered()) {
       if (this.element !== null && typeof this.element !== 'undefined') {
         this.element.dataset.registered = 'true'
+
+        this.registerEventListeners()
+        if (this.dependentElements.length === 0) {
+          this.element.dispatchEvent(
+            new CustomEvent(InteractiveElement.dispatchedEvents.READY))
+        } else {
+          for (const dependentElement of this.dependentElements) {
+            dependentElement.addEventListener(InteractiveElement.dispatchedEvents.READY, () => {
+              let allRegistered = true
+              for (const dependentElement of this.dependentElements) {
+                if (dependentElement.dataset.registered !== 'true' &&
+                    dependentElement.dataset.registered !== true) {
+                  allRegistered = false
+                }
+              }
+              if (allRegistered) {
+                this.element.dispatchEvent(
+                  new CustomEvent(InteractiveElement.dispatchedEvents.READY))
+              }
+            })
+          }
+        }
       }
-      this.registerEventListeners()
     }
   }
 
@@ -134,7 +201,19 @@ export class InteractiveElement {
    * Should be overwritten by extending classes when needed.
    */
   registerEventListeners () {
+    if (this.element !== null) {
+      this.element.addEventListener(InteractiveElement.events.SHOW, () => {
+        this.show()
+      })
+      this.element.addEventListener(InteractiveElement.events.HIDE, () => {
+        this.hide()
+      })
+      this.element.addEventListener(InteractiveElement.events.ENABLE, () => {
+        this.enable()
+      })
+      this.element.addEventListener(InteractiveElement.events.DISABLE, () => {
+        this.disable()
+      })
+    }
   }
 }
-
-InteractiveElement.CLASS_HIDDEN = 'hidden'

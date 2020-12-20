@@ -23,11 +23,16 @@ class Badge extends InteractiveElement {
   /**
    * Badge events.
    *
-   * @returns {{UPDATE_CONTENT: string}} Badge events.
+   * @returns {{CLEAR_VARIATIONS: string, FILL: string, REDUCE_SIZE: string, UPDATE_CONTENT: string, ENLARGE: string, MUTE: string}} Badge events.
    */
   static get events() {
     return {
-      UPDATE_CONTENT: 'update-content'
+      UPDATE_CONTENT: 'update-content',
+      CLEAR_VARIATIONS: 'clear-variations',
+      MUTE: 'mute',
+      FILL: 'fill',
+      REDUCE_SIZE: 'reduce-size',
+      ENLARGE: 'enlarge'
     };
   }
 
@@ -74,10 +79,25 @@ class Badge extends InteractiveElement {
    */
   registerEventListeners() {
     super.registerEventListeners();
+    this.element.addEventListener(Badge.events.CLEAR_VARIATIONS, event => {
+      this.clearVariations();
+    });
+    this.element.addEventListener(Badge.events.MUTE, event => {
+      this.mute();
+    });
+    this.element.addEventListener(Badge.events.FILL, event => {
+      this.fill();
+    });
+    this.element.addEventListener(Badge.events.REDUCE_SIZE, event => {
+      this.reduceSize();
+    });
+    this.element.addEventListener(Badge.events.ENLARGE, event => {
+      this.enlarge();
+    });
     this.element.addEventListener(Badge.events.UPDATE_CONTENT, event => {
       if (event.detail.content !== null && typeof event.detail.content !== 'undefined') {
         this.element.innerHTML = event.detail.content;
       }
     });
   }
-} 
+}

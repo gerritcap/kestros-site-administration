@@ -15,12 +15,15 @@
   ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
   -->
-<template data-sly-template.dynamicContentArea="${ @ loaderSize, loaderPosition, additionalClasses}"
+<template data-sly-template.dynamicContentArea="${ @ errorMessage, loaderSize, loaderPosition, additionalClasses}"
           data-title="Dynamic Content Area"
           data-description="Content area which will asynchronously render content from a given path.
           Loading icon and error messaging are provided.">
   <div class="content-area ${additionalClasses} hidden"></div>
   <div class="loader ${loaderSize} ${loaderPosition}">
     <sly data-sly-call="${loadericon}"/>
+  </div>
+  <div class="error-message hidden">
+    ${errorMessage}
   </div>
 </template>
