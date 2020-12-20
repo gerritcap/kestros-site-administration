@@ -20,7 +20,6 @@
  * Badge group consisting of an error and warning validator badge.
  */
 class ValidationBadgeGroup extends InteractiveElement {
-
   /**
    * Events the ValidationBadgeGroup listens for.
    *
@@ -39,6 +38,7 @@ class ValidationBadgeGroup extends InteractiveElement {
 
   /**
    * Elements the badge group waits for before declaring itself ready.
+   *
    * @returns {HTMLElement[]} Elements the badge group waits for before declaring itself ready.
    */
   get dependentElements() {
