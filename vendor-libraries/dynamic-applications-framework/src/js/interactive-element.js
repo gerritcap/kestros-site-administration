@@ -56,6 +56,26 @@ export class InteractiveElement {
   }
 
   /**
+   * Events that a generic interactive element can dispatch.
+   *
+   * @returns {{READY: string}} Events that a generic interactive element can dispatch.
+   */
+  static get dispatchedEvents () {
+    return {
+      READY: 'element-ready'
+    }
+  }
+
+  /**
+   * Elements that the InteractiveElement will wait to trigger their own ready event, before triggering its own ready event.
+   *
+   * @returns {*[]} Elements that the InteractiveElement will wait to trigger their own ready event, before triggering its own ready event.
+   */
+  get dependentElements () {
+    return []
+  }
+
+  /**
    * Whether the current element is disabled.
    *
    * @returns {*|boolean} Whether the current element is disabled.
@@ -136,8 +156,29 @@ export class InteractiveElement {
     if (!this.isRegistered()) {
       if (this.element !== null && typeof this.element !== 'undefined') {
         this.element.dataset.registered = 'true'
+
+        this.registerEventListeners()
+        if (this.dependentElements.length === 0) {
+          this.element.dispatchEvent(
+            new CustomEvent(InteractiveElement.dispatchedEvents.READY))
+        } else {
+          for (const dependentElement of this.dependentElements) {
+            dependentElement.addEventListener(InteractiveElement.dispatchedEvents.READY, () => {
+              let allRegistered = true
+              for (const dependentElement of this.dependentElements) {
+                if (dependentElement.dataset.registered !== 'true' &&
+                    dependentElement.dataset.registered !== true) {
+                  allRegistered = false
+                }
+              }
+              if (allRegistered) {
+                this.element.dispatchEvent(
+                  new CustomEvent(InteractiveElement.dispatchedEvents.READY))
+              }
+            })
+          }
+        }
       }
-      this.registerEventListeners()
     }
   }
 
