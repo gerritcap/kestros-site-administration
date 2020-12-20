@@ -21,7 +21,7 @@ let assert = require('assert');
 
 jsdom({url: 'http://localhost'})
 
-import {Tab} from '../../../js/tabs/tab'
+import { Tab } from '../../../js/tabs/tab'
 
 describe('Tab', () => {
   describe('initialize', () => {
