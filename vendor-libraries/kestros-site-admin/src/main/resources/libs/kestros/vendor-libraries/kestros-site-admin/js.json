@@ -1,10 +1,12 @@
 {
   "jcr:primaryType": "sling:OrderedFolder",
   "include": [
-    "sidebar/sidebar.js",
     "validated-wizard/validated-wizard.js",
     "validated-wizard/validated-wizard-tab.js",
     "validated-wizard/validated-wizard-tab-content.js",
-    "validated-wizard/validated-wizard-submit-button.js"
+    "validated-wizard/validated-wizard-submit-button.js",
+    "validation-badge/validation-badge-group.js",
+    "sidebar/sidebar.js",
+    "sidebar/sidebar-spine-item.js"
   ]
 }
