@@ -19,7 +19,7 @@
 let jsdom = require('jsdom-global')
 let assert = require('assert');
 
-import {InteractiveElement} from '../../js/interactive-element'
+import { InteractiveElement } from '../../js/interactive-element'
 
 describe('Interactive Element', function () {
 
@@ -154,5 +154,86 @@ describe('Interactive Element', function () {
         assert.equal(false, interactiveElement.isRegistered())
       })
     })
+  })
+
+  describe('register document level events', ()=> {
+    let interactiveElement = null
+    beforeEach(() => {
+      let element = document.createElement('p');
+      interactiveElement = new InteractiveElement(element);
+
+    })
+    it('document level event listener registers properly', ()=> {
+      let count = 0
+      let eventFunction = function() {
+        count ++
+      }
+      interactiveElement.addEventListener(document,'event', eventFunction)
+      document.dispatchEvent(new CustomEvent('event', {}))
+      assert.equal(count, 1)
+    })
+    it('event is removed after interactiveElement is destroyed', () => {
+      let count = 0
+      let eventFunction = function() {
+        count ++
+      }
+      interactiveElement.addEventListener(document,'event', eventFunction)
+      interactiveElement.destroy()
+      document.dispatchEvent(new CustomEvent('event', {}))
+      assert.equal(count, 0)
+    })
+    it('document level event listener registers properly when unnamed', ()=> {
+      let count = 0
+      interactiveElement.addEventListener(document,'event', () => {
+        count++
+      })
+      document.dispatchEvent(new CustomEvent('event', {}))
+      assert.equal(count, 1)
+    })
+    it('event is removed after interactiveElement is destroyed when unnamed', () => {
+      let count = 0
+      interactiveElement.addEventListener(document,'event',() => {
+        count ++
+      })
+      interactiveElement.destroy()
+      document.dispatchEvent(new CustomEvent('event', {}))
+      assert.equal(count, 0)
+    })
+
+    it('multiple similar events can register to the same element', () => {
+      let element2 = document.createElement('div')
+      let interactiveElement2 = new InteractiveElement(element2)
+      let count = 0
+
+      interactiveElement2.addEventListener(document,'event', () => {
+        count++
+      })
+
+      interactiveElement.addEventListener(document,'event',() => {
+        count ++
+      })
+
+      document.dispatchEvent(new CustomEvent('event', {}))
+      assert.equal(count, 2)
+    })
+
+    it('only relevant event is removed', () => {
+      let element2 = document.createElement('div')
+      let interactiveElement2 = new InteractiveElement(element2)
+      let count = 0
+
+      interactiveElement2.addEventListener(document,'event', () => {
+        count++
+      })
+
+      interactiveElement.addEventListener(document,'event',() => {
+        count ++
+      })
+
+      interactiveElement.destroy()
+      document.dispatchEvent(new CustomEvent('event', {}))
+      assert.equal(count, 1)
+    })
+
   })
 })
