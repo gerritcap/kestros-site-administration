@@ -1,20 +1,20 @@
 /*
-~      Copyright (C) 2020  Kestros, Inc.
-~
-~     This program is free software: you can redistribute it and/or modify
-~     it under the terms of the GNU General Public License as published by
-~     the Free Software Foundation, either version 3 of the License, or
-~     (at your option) any later version.
-~
-~     This program is distributed in the hope that it will be useful,
-~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-~     GNU General Public License for more details.
-~
-~     You should have received a copy of the GNU General Public License
-~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-~
-*/
+    ~      Copyright (C) 2020  Kestros, Inc.
+    ~
+    ~     This program is free software: you can redistribute it and/or modify
+    ~     it under the terms of the GNU General Public License as published by
+    ~     the Free Software Foundation, either version 3 of the License, or
+    ~     (at your option) any later version.
+    ~
+    ~     This program is distributed in the hope that it will be useful,
+    ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ~     GNU General Public License for more details.
+    ~
+    ~     You should have received a copy of the GNU General Public License
+    ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    ~
+    */
 
 /**
  * Container element which can dynamically load in content from an external resource.
@@ -224,6 +224,9 @@ class DynamicContentArea extends InteractiveElement {
    */
   loadContent() {
     this.showLoading();
+    for (const element of this.contentArea.element.querySelectorAll('*[data-registered="true"]')) {
+      element.dispatchEvent(new CustomEvent(InteractiveElement.events.DESTROY));
+    }
     this.contentArea.element.innerHTML = '';
     this.element.dispatchEvent(new Event('dynamic-content-loading'));
     if (this.requestPath !== null && typeof this.requestPath !== 'undefined') {

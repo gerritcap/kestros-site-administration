@@ -27,6 +27,12 @@ export class InteractiveElement {
    */
   constructor (element) {
     this.element = element
+    this._registeredEventListeners = {}
+    if (this.element !== null) {
+      this.element.addEventListener(InteractiveElement.events.DESTROY, () => {
+        this.destroy()
+      })
+    }
   }
 
   /**
@@ -44,14 +50,15 @@ export class InteractiveElement {
   /**
    * Events that generic interactive elements listen for.
    *
-   * @returns {{DISABLE: string, HIDE: string, SHOW: string, ENABLE: string}} Events that generic interactive elements listen for.
+   * @returns {{DISABLE: string, HIDE: string, DESTROY: string, SHOW: string, ENABLE: string}} Events that generic interactive elements listen for.
    */
   static get events () {
     return {
       SHOW: 'element-show',
       HIDE: 'element-hide',
       ENABLE: 'element-enable',
-      DISABLE: 'element-disable'
+      DISABLE: 'element-disable',
+      DESTROY: 'element-destroy'
     }
   }
 
@@ -83,7 +90,8 @@ export class InteractiveElement {
   get disabled () {
     if (this.element !== null && typeof this.element !== 'undefined') {
       return this.element.disabled || this.element.getAttribute('disabled') ===
-          '' || this.element.classList.contains(InteractiveElement.classes.DISABLED)
+          '' || this.element.classList.contains(
+        InteractiveElement.classes.DISABLED)
     }
     return false
   }
@@ -163,22 +171,56 @@ export class InteractiveElement {
             new CustomEvent(InteractiveElement.dispatchedEvents.READY))
         } else {
           for (const dependentElement of this.dependentElements) {
-            dependentElement.addEventListener(InteractiveElement.dispatchedEvents.READY, () => {
-              let allRegistered = true
-              for (const dependentElement of this.dependentElements) {
-                if (dependentElement.dataset.registered !== 'true' &&
-                    dependentElement.dataset.registered !== true) {
-                  allRegistered = false
-                }
-              }
-              if (allRegistered) {
-                this.element.dispatchEvent(
-                  new CustomEvent(InteractiveElement.dispatchedEvents.READY))
-              }
-            })
+            if (dependentElement !== null && typeof dependentElement !==
+                'undefined') {
+              dependentElement.addEventListener(
+                InteractiveElement.dispatchedEvents.READY, () => {
+                  let allRegistered = true
+                  for (const dependentElement of this.dependentElements) {
+                    if (dependentElement !== null && typeof dependentElement !==
+                          'undefined') {
+                      if (dependentElement.dataset.registered !== 'true' &&
+                            dependentElement.dataset.registered !== true) {
+                        allRegistered = false
+                      }
+                    }
+                  }
+                  if (allRegistered) {
+                    this.element.dispatchEvent(
+                      new CustomEvent(
+                        InteractiveElement.dispatchedEvents.READY))
+                  }
+                })
+            }
           }
         }
       }
+    }
+  }
+
+  /**
+   * Registers an event listener to a specified element. The event listener is removed when the InteractiveElement is destroyed.
+   *
+   * @param {HTMLElement} element - Element to add event listener to.
+   * @param {string} eventName - Event name.
+   * @param {Function} eventFunction - Function preformed when event is dispatched.
+   */
+  addEventListener (element, eventName, eventFunction) {
+    this._registeredEventListeners[eventName] = {
+      fn: eventFunction,
+      element: element
+    }
+    element.addEventListener(eventName, eventFunction)
+  }
+
+  /**
+   * Destroys the interactiveElement and unregisters all events.
+   */
+  destroy () {
+    for (const event in this._registeredEventListeners) {
+      const eventFunction = this._registeredEventListeners[event].fn
+      const element = this._registeredEventListeners[event].element
+      element.removeEventListener(event, eventFunction)
     }
   }
 
@@ -202,16 +244,16 @@ export class InteractiveElement {
    */
   registerEventListeners () {
     if (this.element !== null) {
-      this.element.addEventListener(InteractiveElement.events.SHOW, () => {
+      this.addEventListener(this.element, InteractiveElement.events.SHOW, () => {
         this.show()
       })
-      this.element.addEventListener(InteractiveElement.events.HIDE, () => {
+      this.addEventListener(this.element, InteractiveElement.events.HIDE, () => {
         this.hide()
       })
-      this.element.addEventListener(InteractiveElement.events.ENABLE, () => {
+      this.addEventListener(this.element, InteractiveElement.events.ENABLE, () => {
         this.enable()
       })
-      this.element.addEventListener(InteractiveElement.events.DISABLE, () => {
+      this.addEventListener(this.element, InteractiveElement.events.DISABLE, () => {
         this.disable()
       })
     }

@@ -16,19 +16,26 @@
     ~
     */
 
-import { DynamicContentArea } from 'dynamic-applications-framework/src/js/dynamic-content-area'
-import { TreeLeaf } from '../tree/tree-leaf'
+import {DynamicContentArea} from 'dynamic-applications-framework/src/js/dynamic-content-area'
+import {TreeLeaf} from '../tree/tree-leaf'
 
 /**
  * TreeLeaf with dynamically loaded child content.
  */
 export class DynamicTreeLeaf extends TreeLeaf {
+
+  static get events() {
+    return {
+      LOAD: 'dynamic-tree-leaf-load'
+    }
+  }
+
   /**
    * DynamicContent element.
    *
    * @returns {HTMLElement} DynamicContent element.
    */
-  get dynamicContentElement () {
+  get dynamicContentElement() {
     return this.element.querySelector('.dynamic-content')
   }
 
@@ -37,7 +44,7 @@ export class DynamicTreeLeaf extends TreeLeaf {
    *
    * @returns {string} Whether the leaf has children.
    */
-  get hasChildren () {
+  get hasChildren() {
     return this.element.dataset.hasChildren === true ||
         this.element.dataset.hasChildren === 'true'
   }
@@ -45,16 +52,22 @@ export class DynamicTreeLeaf extends TreeLeaf {
   /**
    * Opens the leaf.
    */
-  open () {
+  open() {
     super.open()
-    this.dynamicContentElement.dispatchEvent(
-      new CustomEvent(DynamicContentArea.events.REFRESH))
+    for (let leaf of this.childLeaves) {
+      leaf.dispatchEvent(new CustomEvent(DynamicTreeLeaf.events.LOAD))
+    }
+
   }
 
   /**
    * Registers DynamicTreeLeaf event listeners.
    */
-  registerEventListeners () {
+  registerEventListeners() {
     super.registerEventListeners()
+    this.element.addEventListener(DynamicTreeLeaf.events.LOAD, () => {
+      this.dynamicContentElement.dispatchEvent(
+          new CustomEvent(DynamicContentArea.events.REFRESH))
+    })
   }
 }

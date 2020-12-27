@@ -232,6 +232,9 @@ export class DynamicContentArea extends InteractiveElement {
    */
   loadContent () {
     this.showLoading()
+    for (const element of this.contentArea.element.querySelectorAll('*[data-registered="true"]')) {
+      element.dispatchEvent(new CustomEvent(InteractiveElement.events.DESTROY))
+    }
     this.contentArea.element.innerHTML = ''
     this.element.dispatchEvent(new Event('dynamic-content-loading'))
     if (this.requestPath !== null && typeof this.requestPath !== 'undefined') {
