@@ -24,6 +24,17 @@ import { Badge } from 'kestros-ui-foundation/src/js/badge/badge'
  */
 export class ValidationBadgeGroup extends InteractiveElement {
   /**
+   * Document level events that ValidationBadgeGroup listens for.
+   *
+   * @returns {{REFRESH_VALIDATION_BADGES: string}} Document level events that ValidationBadgeGroup listens for.
+   */
+  static get documentEvents () {
+    return {
+      REFRESH_VALIDATION_BADGES: 'refresh-validation-badges'
+    }
+  }
+
+  /**
    * Events the ValidationBadgeGroup listens for.
    *
    * @returns {{MUTE_ALL: string, FILL_ALL: string, CLEAR_VARIATIONS_ALL: string, REDUCE_SIZE_ALL: string, ENLARGE_ALL: string, UPDATE: string}} Events the ValidationBadgeGroup listens for.
@@ -55,6 +66,15 @@ export class ValidationBadgeGroup extends InteractiveElement {
    */
   get path () {
     return this.element.dataset.path
+  }
+
+  /**
+   * Resource path.
+   *
+   * @returns {string} Resource path.
+   */
+  get resourcePath () {
+    return this.path.split('.')[0]
   }
 
   /**
@@ -181,6 +201,14 @@ export class ValidationBadgeGroup extends InteractiveElement {
    */
   registerEventListeners () {
     super.registerEventListeners()
+    this.addEventListener(document,
+      ValidationBadgeGroup.documentEvents.REFRESH_VALIDATION_BADGES,
+      (event) => {
+        console.log(event.detail.path)
+        if (event.detail.path === this.resourcePath) {
+          this.update()
+        }
+      })
 
     this.element.addEventListener(
       ValidationBadgeGroup.events.CLEAR_VARIATIONS_ALL, () => {
@@ -201,9 +229,10 @@ export class ValidationBadgeGroup extends InteractiveElement {
         this.dispatchEventOnAllBadges(Badge.events.ENLARGE)
       })
 
-    this.element.addEventListener(InteractiveElement.dispatchedEvents.READY, () => {
-      this.update()
-    })
+    this.element.addEventListener(InteractiveElement.dispatchedEvents.READY,
+      () => {
+        this.update()
+      })
 
     this.element.addEventListener(ValidationBadgeGroup.events.UPDATE, () => {
       this.update()

@@ -16,10 +16,22 @@
   ~
   */
 
+
 /**
  * Badge group consisting of an error and warning validator badge.
  */
 class ValidationBadgeGroup extends InteractiveElement {
+  /**
+   * Document level events that ValidationBadgeGroup listens for.
+   *
+   * @returns {{REFRESH_VALIDATION_BADGES: string}} Document level events that ValidationBadgeGroup listens for.
+   */
+  static get documentEvents() {
+    return {
+      REFRESH_VALIDATION_BADGES: 'refresh-validation-badges'
+    };
+  }
+
   /**
    * Events the ValidationBadgeGroup listens for.
    *
@@ -52,6 +64,15 @@ class ValidationBadgeGroup extends InteractiveElement {
    */
   get path() {
     return this.element.dataset.path;
+  }
+
+  /**
+   * Resource path.
+   *
+   * @returns {string} Resource path.
+   */
+  get resourcePath() {
+    return this.path.split('.')[0];
   }
 
   /**
@@ -172,6 +193,12 @@ class ValidationBadgeGroup extends InteractiveElement {
    */
   registerEventListeners() {
     super.registerEventListeners();
+    this.addEventListener(document, ValidationBadgeGroup.documentEvents.REFRESH_VALIDATION_BADGES, event => {
+      console.log(event.detail.path);
+      if (event.detail.path === this.resourcePath) {
+        this.update();
+      }
+    });
 
     this.element.addEventListener(ValidationBadgeGroup.events.CLEAR_VARIATIONS_ALL, () => {
       this.dispatchEventOnAllBadges(Badge.events.CLEAR_VARIATIONS);
