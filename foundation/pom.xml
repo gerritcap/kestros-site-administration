@@ -29,8 +29,8 @@
   </parent>
 
   <groupId>io.kestros.cms</groupId>
-  <artifactId>kestros-site-administration</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <artifactId>kestros-site-administration-foundation</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>Kestros Site Administration</name>
   <description>Foundational bundles, frontend libraries, and resources required for Kestros Site
@@ -39,17 +39,12 @@
   <packaging>pom</packaging>
 
   <modules>
-    <!--    <module>api</module>-->
-    <!--    <module>vendor-libraries</module>-->
+    <module>api</module>
+    <module>core</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>io.kestros.cms</groupId>
-        <artifactId>kestros-forms-foundation</artifactId>
-        <version>0.1.1</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
